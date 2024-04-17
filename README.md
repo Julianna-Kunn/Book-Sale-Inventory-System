@@ -1,2 +1,1 @@
-# Book-Sale-Inventory-System
-All about Book Sales
+//Hello-kunn, Juliana-Kunn Here
