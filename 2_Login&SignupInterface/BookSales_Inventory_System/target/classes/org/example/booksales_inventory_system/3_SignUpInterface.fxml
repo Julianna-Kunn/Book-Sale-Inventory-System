@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="signUpAnchorPane" prefHeight="865.0" prefWidth="1320.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.booksales_inventory_system.HelloController">
+   <children>
+      <Rectangle fx:id="retangleSignUp" arcHeight="5.0" arcWidth="5.0" fill="#d3e3fc" height="879.0" layoutX="392.0" layoutY="-7.0" stroke="BLACK" strokeType="INSIDE" width="928.0" />
+      <Text fx:id="signUpText" layoutX="481.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SIGN - UP AN ACCOUNT">
+         <font>
+            <Font name="System Bold" size="65.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="BookSignUpImage" fitHeight="391.0" fitWidth="421.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../ICONS_FOR_PROJECT/book%20shelf.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="BookSignUpImage1" fitHeight="539.0" fitWidth="394.0" layoutY="391.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../ICONS_FOR_PROJECT/book%20shelf.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="BookSignUpImage2" fitHeight="391.0" fitWidth="394.0" layoutY="481.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../ICONS_FOR_PROJECT/book%20shelf.png" />
+         </image>
+      </ImageView>
+      <Rectangle fx:id="tiringleSignUp" arcHeight="5.0" arcWidth="5.0" fill="#00887a" height="286.0" layoutX="55.0" layoutY="293.0" stroke="BLACK" strokeType="INSIDE" width="285.0" />
+      <Text fill="#f5f0f0" layoutX="89.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME">
+         <font>
+            <Font name="Times New Roman Bold" size="40.0" />
+         </font>
+      </Text>
+      <Text fill="#f5f0f0" layoutX="128.0" layoutY="449.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BACK!,">
+         <font>
+            <Font name="Times New Roman Bold" size="40.0" />
+         </font>
+      </Text>
+      <Text fill="#f5f0f0" layoutX="120.0" layoutY="494.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADMIN!">
+         <font>
+            <Font name="Times New Roman Bold" size="40.0" />
+         </font>
+      </Text>
+      <TextField fx:id="fullNameTextField" layoutX="661.0" layoutY="256.0" prefHeight="63.0" prefWidth="420.0" promptText="Full Name">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="emailTextField" layoutX="660.0" layoutY="337.0" prefHeight="63.0" prefWidth="420.0" promptText="Email">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="contactNumberTextField" layoutX="660.0" layoutY="426.0" prefHeight="63.0" prefWidth="420.0" promptText="Contact Number">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="passwordTextField" layoutX="660.0" layoutY="515.0" prefHeight="63.0" prefWidth="420.0" promptText="Password">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="confiPasswodTextField" layoutX="660.0" layoutY="599.0" prefHeight="63.0" prefWidth="420.0" promptText="Confirm Password">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </TextField>
+      <Text fx:id="fullNameText" layoutX="513.0" layoutY="299.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Full Name" wrappingWidth="164.88672828674316">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Text fx:id="emaliText" layoutX="575.0" layoutY="380.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="96.88672828674316">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Text fx:id="contactNumberText" layoutX="430.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact Number" wrappingWidth="234.79298663139343">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Text fx:id="passwordText" layoutX="521.0" layoutY="558.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="128.88672828674316">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Text fx:id="confiPasswordText" layoutX="409.0" layoutY="642.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confrim Password" wrappingWidth="255.88672828674316">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="702.0" layoutY="721.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Successfully Registered! USER – ID!">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
+      <Button fx:id="closeSignUpButton" layoutX="1237.0" layoutY="-2.0" mnemonicParsing="false" onAction="#closeSignUpButton" prefHeight="40.0" prefWidth="83.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" />
+      <ImageView fitHeight="23.0" fitWidth="27.0" layoutX="1265.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../ICONS_FOR_PROJECT/CLOSE.png" />
+         </image>
+      </ImageView>
+      <Button id="glass" fx:id="backSignUp" layoutX="1191.0" layoutY="794.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="97.0" stylesheets="@../../../../../../../../stylesheet.css" text="Back">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
