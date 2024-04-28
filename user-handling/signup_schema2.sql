@@ -1,0 +1,1 @@
+SELECT * FROM signup_schema.users;
