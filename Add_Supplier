@@ -1,0 +1,136 @@
+package com.example.informationsupplier;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class AddViewsupplier {
+    private static List<Supplier> suppliers = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("1. Add supplier");
+            System.out.println("2. Exit");
+            System.out.print("Choose an option: ");
+            int option = scanner.nextInt();
+            scanner.nextLine(); // consume newline left-over
+
+            switch (option) {
+                case 1:
+                    addSupplier();
+                    break;
+                case 2:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    private static void addSupplier() {
+        Supplier supplier = new Supplier();
+
+        System.out.print("Enter supplier company/business name: ");
+        supplier.setCompanyName(scanner.nextLine());
+
+        System.out.print("Enter supplier representative name: ");
+        supplier.setRepresentativeName(scanner.nextLine());
+
+        System.out.print("Enter supplier birthdate (MM-DD-YY): ");
+        String birthdateStr = scanner.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yy");
+        supplier.setBirthdate(LocalDate.parse(birthdateStr, formatter));
+
+        System.out.print("Enter supplier active business contact number: ");
+        supplier.setContactNumber(scanner.nextLine());
+
+        System.out.print("Enter book reorder point: ");
+        supplier.setReorderPoint(scanner.nextInt());
+        scanner.nextLine(); // consume newline left-over
+
+        supplier.setTimestamp(LocalDate.now());
+
+        suppliers.add(supplier);
+
+        System.out.println("Supplier added successfully!");
+        System.out.print("Want to add more suppliers? (y/n): ");
+        char response = scanner.next().charAt(0);
+        scanner.nextLine(); // consume newline left-over
+
+        if (response == 'n') {
+            System.exit(0);
+        }
+    }
+
+    private static class Supplier {
+        private int id;
+        private String companyName;
+        private String representativeName;
+        private LocalDate birthdate;
+        private String contactNumber;
+        private int reorderPoint;
+        private LocalDate timestamp;
+
+        // getters and setters
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getCompanyName() {
+            return companyName;
+        }
+
+        public void setCompanyName(String companyName) {
+            this.companyName = companyName;
+        }
+
+        public String getRepresentativeName() {
+            return representativeName;
+        }
+
+        public void setRepresentativeName(String representativeName) {
+            this.representativeName = representativeName;
+        }
+
+        public LocalDate getBirthdate() {
+            return birthdate;
+        }
+
+        public void setBirthdate(LocalDate birthdate) {
+            this.birthdate = birthdate;
+        }
+
+        public String getContactNumber() {
+            return contactNumber;
+        }
+
+        public void setContactNumber(String contactNumber) {
+            this.contactNumber = contactNumber;
+        }
+
+        public int getReorderPoint() {
+            return reorderPoint;
+        }
+
+        public void setReorderPoint(int reorderPoint) {
+            this.reorderPoint = reorderPoint;
+        }
+
+        public LocalDate getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(LocalDate timestamp) {
+            this.timestamp = timestamp;
+        }
+    }
+}
+
