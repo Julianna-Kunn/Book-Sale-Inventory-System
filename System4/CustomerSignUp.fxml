@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="signUpAnchorPane" minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.system4.CustomerSignUp">
+   <children>
+      <Rectangle fx:id="retangleSignUp" arcHeight="5.0" arcWidth="5.0" fill="#d3e3fc" height="603.0" layoutX="312.0" layoutY="-10.0" onDragDetected="#updateDateLabel" stroke="BLACK" strokeType="INSIDE" width="690.0" />
+      <Text fx:id="signUpText" fill="#00887a" layoutX="417.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SIGN - UP AN ACCOUNT" wrappingWidth="522.150390625">
+         <font>
+            <Font name="PoetsenOne" size="45.0" />
+         </font>
+      </Text>
+      <TextField id="white" fx:id="emailTextField" layoutX="486.0" layoutY="228.0" prefHeight="40.0" prefWidth="338.0" promptText="EMAIL" stylesheets="@../../../Stylesheet/stylesheet.css">
+         <font>
+            <Font name="Crimson Text Bold" size="19.0" />
+         </font>
+      </TextField>
+      <TextField id="white" fx:id="nameTextField" layoutX="486.0" layoutY="166.0" prefHeight="40.0" prefWidth="338.0" promptText="FULL NAME" stylesheets="@../../../Stylesheet/stylesheet.css">
+         <font>
+            <Font name="Crimson Text Bold" size="19.0" />
+         </font>
+      </TextField>
+      <TextField id="white" fx:id="contactNumberTextField" layoutX="486.0" layoutY="289.0" prefHeight="40.0" prefWidth="338.0" promptText="CONTACT NUMBER" stylesheets="@../../../Stylesheet/stylesheet.css">
+         <font>
+            <Font name="Crimson Text Bold" size="19.0" />
+         </font>
+      </TextField>
+      <Button id="glass" fx:id="backSignUp" layoutX="891.0" layoutY="515.0" mnemonicParsing="false" onAction="#BackButtonOnAction" prefHeight="29.0" prefWidth="72.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="BACK">
+         <font>
+            <Font name="Crimson Text Regular" size="14.0" />
+         </font>
+      </Button>
+      <Button id="white" fx:id="closeSignUpButton" layoutX="583.0" layoutY="474.0" mnemonicParsing="false" onAction="#signUpButton" prefHeight="30.0" prefWidth="144.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Sign Up">
+         <font>
+            <Font name="Crimson Text Bold" size="19.0" />
+         </font></Button>
+      <PasswordField id="white" fx:id="passwordPasswordField" layoutX="486.0" layoutY="352.0" prefHeight="40.0" prefWidth="338.0" promptText="Password" stylesheets="@../../../Stylesheet/stylesheet.css">
+         <font>
+            <Font name="Crimson Text Bold" size="19.0" />
+         </font>
+      </PasswordField>
+      <PasswordField id="white" fx:id="confiPasswordPasswordField" layoutX="486.0" layoutY="415.0" prefHeight="40.0" prefWidth="338.0" promptText="Confirm Password" stylesheets="@../../../Stylesheet/stylesheet.css">
+         <font>
+            <Font name="Crimson Text Bold" size="19.0" />
+         </font>
+      </PasswordField>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="45.0" layoutX="305.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="700.0" />
+      <ImageView fx:id="bookDesign1" fitHeight="314.0" fitWidth="309.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/book%20shelf.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bookDesign2" fitHeight="316.0" fitWidth="309.0" layoutY="297.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/book%20shelf.jpg" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="542.0" layoutX="994.0" layoutY="37.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="9.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="36.0" layoutX="308.0" layoutY="569.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="696.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="542.0" layoutX="307.0" layoutY="37.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="7.0" />
+      <Rectangle fx:id="rectangleDesing2" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="220.0" layoutX="44.0" layoutY="215.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" width="229.0" />
+      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="58.0" layoutY="228.0">
+         <image>
+            <Image url="@Images/BOOKSALE.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="37.0" layoutX="431.0" layoutY="166.0">
+         <image>
+            <Image url="@Images/user_.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="46.0" layoutX="427.0" layoutY="226.0">
+         <image>
+            <Image url="@Images/email_.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="46.0" layoutX="427.0" layoutY="289.0">
+         <image>
+            <Image url="@Images/phone_.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="45.0" fitWidth="46.0" layoutX="427.0" layoutY="350.0">
+         <image>
+            <Image url="@Images/lock-password-bold_.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="40.0" layoutX="331.0" layoutY="504.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="186.0" />
+      <Label fx:id="dateLabel" layoutX="341.0" layoutY="509.0" prefHeight="30.0" prefWidth="200.0" textAlignment="CENTER">
+         <font>
+            <Font name="Crimson Text Regular" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

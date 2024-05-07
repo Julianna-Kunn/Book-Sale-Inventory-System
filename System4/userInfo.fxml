@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.system4.userInfo">
+   <children>
+      <Rectangle fx:id="rectangleDesign" arcHeight="5.0" arcWidth="5.0" fill="#d3e3fc" height="610.0" layoutX="-3.0" layoutY="-5.0" stroke="#00887a" strokeType="INSIDE" width="1006.0" />
+      <Text fx:id="BookSalesText" fill="#00887a" layoutX="400.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USER INFO">
+         <font>
+            <Font name="PoetsenOne" size="45.0" />
+         </font>
+      </Text>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="424.0" layoutX="260.0" layoutY="108.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="481.0" />
+      <Button id="glass" fx:id="backAdminHome" layoutX="856.0" layoutY="510.0" mnemonicParsing="false" onAction="#Back" prefHeight="29.0" prefWidth="72.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Back">
+         <font>
+            <Font name="Crimson Text Regular" size="14.0" />
+         </font>
+      </Button>
+      <Label fx:id="userIdLabel" layoutX="426.0" layoutY="133.0" prefHeight="36.0" prefWidth="142.0" textAlignment="CENTER">
+         <font>
+            <Font name="Crimson Text Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="userNameLabel" layoutX="427.0" layoutY="238.0" prefHeight="36.0" prefWidth="283.0" textAlignment="CENTER">
+         <font>
+            <Font name="Crimson Text Bold" size="20.0" />
+         </font>
+      </Label>
+      <Button id="skyblue" fx:id="signUpButton" layoutX="533.0" layoutY="479.0" mnemonicParsing="false" onAction="#Update" prefHeight="31.0" prefWidth="184.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Do you wish to Update?">
+         <font>
+            <Font name="Crimson Text Regular" size="15.0" />
+         </font>
+      </Button>
+      <Label fx:id="userTypeLabel" layoutX="426.0" layoutY="187.0" prefHeight="36.0" prefWidth="142.0" textAlignment="CENTER">
+         <font>
+            <Font name="Crimson Text Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="userEmailLabel" layoutX="431.0" layoutY="338.0" prefHeight="36.0" prefWidth="283.0" textAlignment="CENTER">
+         <font>
+            <Font name="Crimson Text Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="userPasswordLabel" layoutX="432.0" layoutY="378.0" prefHeight="36.0" prefWidth="283.0" textAlignment="CENTER">
+         <font>
+            <Font name="Crimson Text Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="userDateLabel" layoutX="434.0" layoutY="428.0" prefHeight="36.0" prefWidth="283.0" textAlignment="CENTER">
+         <font>
+            <Font name="Crimson Text Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="userContactNumberLabel" layoutX="430.0" layoutY="292.0" prefHeight="36.0" prefWidth="283.0" textAlignment="CENTER">
+         <font>
+            <Font name="Crimson Text Bold" size="20.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="545.0" layoutX="959.0" layoutY="28.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="43.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="36.0" layoutX="-8.0" layoutY="568.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1013.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="41.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1003.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="545.0" layoutY="36.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="41.0" />
+      <ImageView fx:id="userImage" fitHeight="41.0" fitWidth="56.0" layoutX="364.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/users.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="359.0" layoutY="125.0">
+         <image>
+            <Image url="@Images/user-id-bold_.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="36.0" fitWidth="39.0" layoutX="366.0" layoutY="377.0">
+         <image>
+            <Image url="@Images/lock-password-bold_.png" />
+         </image>
+      </ImageView>
+      <Line endX="184.66668701171875" layoutX="457.0" layoutY="175.0" startX="-100.0" />
+      <Line endX="184.66668701171875" layoutX="458.0" layoutY="231.0" startX="-100.0" />
+      <ImageView fitHeight="39.0" fitWidth="43.0" layoutX="363.0" layoutY="237.0">
+         <image>
+            <Image url="@Images/user_.png" />
+         </image>
+      </ImageView>
+      <Line endX="184.66668701171875" layoutX="459.0" layoutY="283.0" startX="-100.0" />
+      <ImageView fitHeight="34.0" fitWidth="33.0" layoutX="368.0" layoutY="291.0">
+         <image>
+            <Image url="@Images/phone_.png" />
+         </image>
+      </ImageView>
+      <Line endX="184.66668701171875" layoutX="457.0" layoutY="332.0" startX="-100.0" />
+      <ImageView fitHeight="35.0" fitWidth="36.0" layoutX="369.0" layoutY="333.0">
+         <image>
+            <Image url="@Images/email_.png" />
+         </image>
+      </ImageView>
+      <Line endX="184.66668701171875" layoutX="455.0" layoutY="374.0" startX="-100.0" />
+      <Line endX="184.66668701171875" layoutX="457.0" layoutY="419.0" startX="-100.0" />
+      <ImageView fitHeight="39.0" fitWidth="42.0" layoutX="366.0" layoutY="428.0">
+         <image>
+            <Image url="@Images/calendar.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
