@@ -301,27 +301,22 @@ public class AddBooks implements Initializable {
         int bookQuantity = Integer.parseInt(BBookQuantity.getText());
         String invoiceId = InvoiceIdgenerate(); // Initialize the invoice ID
         int successfulAdditions = 0;
-        boolean allBooksAddedSuccessfully = true;
-        String bookid = Bidgenerate();
-        for (int i = 0; i < bookQuantity; i++) {// Generate a unique book ID for each book
-            String title = BTitle.getText();
-            String author = BAuthor.getText();
-            String genre = genreDrop.getValue();
-            String status = Status.getValue();
-            String isbn = BIsbn.getText();
-            int pubdate = Integer.parseInt(BPubDate.getText());
-            int seriesNo = Integer.parseInt(BSeriesNo.getText());
-            String shelf = populateGenreToShelfMap(genre);
-            double supplierPrice = Double.parseDouble(BSupplierPrice.getText());
-            double sellingPrice = Prices(supplierPrice, shelf);
-            int bquantity = Integer.parseInt(BQuantity.getText());
 
-            boolean addedSuccessfully = AddBook(bookid, title, author, genre, status, isbn, pubdate, sellingPrice, seriesNo, shelf, supplierPrice, invoiceId, 1);
-            successfulAdditions += (addedSuccessfully ? 1 : 0);
-            allBooksAddedSuccessfully &= addedSuccessfully;
-        }
+        // Generate a unique book ID for each book
+        String title = BTitle.getText();
+        String author = BAuthor.getText();
+        String genre = genreDrop.getValue();
+        String status = Status.getValue();
+        String isbn = BIsbn.getText();
+        int pubdate = Integer.parseInt(BPubDate.getText());
+        int seriesNo = Integer.parseInt(BSeriesNo.getText());
+        String shelf = populateGenreToShelfMap(genre);
+        double supplierPrice = Double.parseDouble(BSupplierPrice.getText());
+        double sellingPrice = Prices(supplierPrice, shelf);
+        int bquantity = Integer.parseInt(BQuantity.getText());
 
-        // Validate and show alerts after all books are processed
+        boolean addedSuccessfully = true;
+
         if (validateFields("new")) {
             System.out.println("Validation failed: All fields are required.");
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -330,30 +325,42 @@ public class AddBooks implements Initializable {
             errorAlert.setContentText("All fields are required!");
             errorAlert.showAndWait();
         } else {
-            if (successfulAdditions == bookQuantity) {
-                invoiceId = InvoiceIdgenerate();
-                System.out.println("Invoice ID: " + invoiceId);
-                System.out.println("Validation passed: Proceeding to save data.");
-
-                Alert succAlert = new Alert(Alert.AlertType.INFORMATION);
-                succAlert.setTitle("Success");
-                succAlert.setHeaderText(null);
-                succAlert.setContentText("Book added successfully!");
-                succAlert.showAndWait();
-                BBookQuantity.clear();
-            } else {
-                System.out.println("Validation Failed: No data saved.");
-
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setTitle("Failed");
-                errorAlert.setHeaderText(null);
-                errorAlert.setContentText("All Book Addition Unsuccessful!");
-                errorAlert.showAndWait();
+            for (int i = 0; i < bquantity; i++) {
+                String bookid = Bidgenerate();
+                addedSuccessfully = AddBook(bookid, title, author, genre, status, isbn, pubdate, sellingPrice, seriesNo, shelf, supplierPrice, invoiceId, 1);
+                if (addedSuccessfully) {
+                    successfulAdditions++;
+                } else {
+                    // If any book addition fails, break out of the loop
+                    break;
+                }
             }
+        }
+
+        if (successfulAdditions == bookQuantity) {
+            // Increment the invoice ID only if the successful additions equal the book quantity
+            invoiceId = InvoiceIdgenerate();
+            System.out.println("Invoice ID: " + invoiceId);
+            System.out.println("Validation passed: Proceeding to save data.");
+
+            Alert succAlert = new Alert(Alert.AlertType.INFORMATION);
+            succAlert.setTitle("Success");
+            succAlert.setHeaderText(null);
+            succAlert.setContentText("Book added successfully!");
+            succAlert.showAndWait();
+            BBookQuantity.clear();
+        } else {
+            System.out.println("Validation Failed: No data saved.");
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Failed");
+            errorAlert.setHeaderText(null);
+            errorAlert.setContentText("All Book Addition Unsuccessful!");
+            errorAlert.showAndWait();
         }
 
         clearInputFields();
     }
+
 
 
 
@@ -427,33 +434,82 @@ public class AddBooks implements Initializable {
         String user = "root";
         String password = "septembersapphire_07";
 
-        String sql = "INSERT INTO addbookinvoice.addbooksinfo (`BOOK ID`, TITLE, AUTHOR, `SERIES NO.`, GENRE, SHELF, `PUB-DATE`, ISBN, STATUS, PRICE, `SUP-PRICE`, QUANTITY, `INVOICE ID`, `TIMESTAMP`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        boolean bookAlreadyExists = bookExists(title, author, genre, isbn, pubdate, sellingPrice,
+                seriesNo, shelf, supplierPrice);
+
+        // If the book already exists, display a message and return false
+        if (bookAlreadyExists) {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Duplicate Book");
+            errorAlert.setHeaderText(null);
+            errorAlert.setContentText("A book with the same details already exists!");
+            errorAlert.showAndWait();
+            return false;
+        } else {
+
+            String sql = "INSERT INTO addbookinvoice.addbooksinfo (`BOOK ID`, TITLE, AUTHOR, `SERIES NO.`, GENRE, SHELF, `PUB-DATE`, ISBN, STATUS, PRICE, `SUP-PRICE`, QUANTITY, `INVOICE ID`, `TIMESTAMP`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+            try (Connection conn = DriverManager.getConnection(url, user, password);
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, bookid);
+                pstmt.setString(2, title);
+                pstmt.setString(3, author);
+                pstmt.setInt(4, seriesNo);  // Assuming seriesNo is an integer
+                pstmt.setString(5, genre);
+                pstmt.setString(6, shelf);   // Assuming shelf is a string
+                pstmt.setInt(7, pubdate); // Assuming pubDate is a string
+                pstmt.setString(8, isbn);
+                pstmt.setString(9, status);
+                pstmt.setDouble(10, sellingPrice);   // Assuming price is a double
+                pstmt.setDouble(11, supplierPrice); // Assuming supPrice is a double
+                pstmt.setInt(12, 1);
+                pstmt.setString(13, invoiceid);
+                pstmt.setString(14, " (" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + ")");
+
+                pstmt.executeUpdate();
+                BBookId.setText(Bidgenerate());
+                System.out.println("SAVE: " + Bidgenerate() + " ");
+                // Clear the book quantity field
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @FXML
+    private boolean bookExists(String title, String author, String genre, String isbn, int pubdate, double sellingPrice,
+                               int seriesNo, String shelf, double supplierPrice) {
+        String url = "jdbc:mysql://localhost:3306/addbookinvoice";
+        String user = "root";
+        String password = "septembersapphire_07";
+
+        String sql = "SELECT COUNT(*) FROM addbookinvoice.addbooksinfo WHERE TITLE = ? AND AUTHOR = ? AND GENRE = ? AND ISBN = ? " +
+                "AND `PUB-DATE` = ? AND PRICE = ? AND `SERIES NO.` = ? AND SHELF = ? AND `SUP-PRICE` = ?";
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, bookid);
-            pstmt.setString(2, title);
-            pstmt.setString(3, author);
-            pstmt.setInt(4, seriesNo);  // Assuming seriesNo is an integer
-            pstmt.setString(5, genre);
-            pstmt.setString(6, shelf);   // Assuming shelf is a string
-            pstmt.setInt(7, pubdate); // Assuming pubDate is a string
-            pstmt.setString(8, isbn);
-            pstmt.setString(9, status);
-            pstmt.setDouble(10, sellingPrice);   // Assuming price is a double
-            pstmt.setDouble(11, supplierPrice); // Assuming supPrice is a double
-            pstmt.setInt(12, bquantity);
-            pstmt.setString(13, invoiceid);
-            pstmt.setString(14, " (" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + ")");
+            pstmt.setString(1, title);
+            pstmt.setString(2, author);
+            pstmt.setString(3, genre);
+            pstmt.setString(4, isbn);
+            pstmt.setInt(5, pubdate);
+            pstmt.setDouble(6, sellingPrice);
+            pstmt.setInt(7, seriesNo);
+            pstmt.setString(8, shelf);
+            pstmt.setDouble(9, supplierPrice);
 
-            pstmt.executeUpdate();
-            BBookId.setText(Bidgenerate());
-            System.out.println("SAVE: " + Bidgenerate() + " ");
-            // Clear the book quantity field
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0; // Returns true if there's at least one matching entry in the database
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return false;
     }
+
 }
+
