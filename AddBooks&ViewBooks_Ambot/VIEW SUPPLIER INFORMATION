@@ -1,0 +1,70 @@
+package com.example.bsis;
+
+public class ViewSupplierInformation {
+
+    String supplierID;
+    String companyName;
+    String supplierName;
+    String invoiceid;
+    String timestamp;
+    int contactnum;
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public int getContactnum() {
+        return contactnum;
+    }
+
+    public void setContactnum(int contactnum) {
+        this.contactnum = contactnum;
+    }
+
+    public String getSupplierID() {
+        return supplierID;
+    }
+
+    public void setSupplierID(String supplierID) {
+        this.supplierID = supplierID;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public String getInvoiceid() {
+        return invoiceid;
+    }
+
+    public void setInvoiceid(String invoiceid) {
+        this.invoiceid = invoiceid;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    ViewSupplierInformation(String supplierID, String supplierName, String invoiceid, String timestamp, String companyName, int contactnum){
+        this.supplierID = supplierID;
+        this.supplierName = supplierName;
+        this.invoiceid = invoiceid;
+        this.timestamp = timestamp;
+        this.contactnum = contactnum;
+        this.companyName = companyName;
+    }
+
+
+}
