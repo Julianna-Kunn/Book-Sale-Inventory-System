@@ -1,0 +1,96 @@
+package com.example.bsis;
+
+import com.mysql.cj.protocol.Resultset;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.sql.*;
+
+import javafx.collections.ObservableList;
+
+import javax.swing.text.View;
+import java.sql.Connection;
+import java.util.logging.Logger;
+
+//VIEW BOOKS SA BUYER PHASE
+
+public class ViewSupplier {
+    private static final Logger logger = Logger.getLogger(ViewBooks.class.getName());
+
+    @FXML
+    private TableColumn<ViewSupplierInformation, String> VBirthdate;
+
+    @FXML
+    private TableColumn<ViewSupplierInformation, String> VCompany;
+
+    @FXML
+    private TableColumn<ViewSupplierInformation, Integer> VContact;
+
+    @FXML
+    private TableColumn<ViewSupplierInformation, String> VSupplierId;
+
+    @FXML
+    private TableColumn<ViewSupplierInformation, String> VSupplierName;
+
+    @FXML
+    private TableColumn<ViewSupplierInformation, String> VTimestamp;
+
+    @FXML
+    private TableView<ViewBookInformation> ViewSupplierTable;
+
+    int index = -1;
+
+    Connection connect = null;
+    Resultset rs = null;
+    PreparedStatement pstmt = null;
+
+    @FXML
+    public void initialize() {
+        VSupplierId.setCellValueFactory(new PropertyValueFactory<ViewSupplierInformation, String>("supplierID"));
+        VCompany.setCellValueFactory(new PropertyValueFactory<ViewSupplierInformation, String>(""));
+        VSupplierName.setCellValueFactory(new PropertyValueFactory<ViewSupplierInformation, String>("author"));
+        VBirthdate.setCellValueFactory(new PropertyValueFactory<ViewSupplierInformation, String>("seriesNo"));
+        VContact.setCellValueFactory(new PropertyValueFactory<ViewSupplierInformation, Integer>("genre"));
+        VTimestamp.setCellValueFactory(new PropertyValueFactory<ViewSupplierInformation, String>("isbn"));
+
+        //loadDataFromDatabase();
+        ObservableList<ViewBookInformation> data = SQLConnector.getDatausers();
+        System.out.println("Size of the list: " + data.size());
+        ViewSupplierTable.setItems(data);
+        ViewSupplierTable.refresh();
+    }
+
+    @FXML
+    private void loadDataFromDatabase() {
+        String url = "jdbc:mysql://localhost:3306/add_supplier";
+        String user = "root";
+        String password = "septembersapphire_07";
+
+        String sql = "SELECT `supplier_id`, `company name`, `representative name`, `Birthdate`, `contact number`, TimeStamp FROM add_supplier.add_supplier";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery();) {
+            // Clear existing items in the TableView
+            ViewSupplierTable.getItems().clear();
+
+            // Iterate through the ResultSet and populate the TableView
+            while (rs.next()) {
+                ViewBookInformation data = new ViewBookInformation(
+                        rs.getString("supplierID"),
+                        rs.getString("companyName"),
+                        rs.getString("supplierName"),
+                        rs.getString("invoiceid"),
+                        rs.getInt("contactnum"),
+                        rs.getString("timestamp")
+                );  ViewSupplierTable.getItems().add(data);
+
+            }
+        } catch (SQLException e) {
+            logger.severe("Error loading MainInterface.fxml: " + e.getMessage());
+        }
+    }
+
+}
