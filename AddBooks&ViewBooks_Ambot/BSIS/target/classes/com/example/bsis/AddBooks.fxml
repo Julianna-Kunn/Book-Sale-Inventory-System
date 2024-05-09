@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bsis.AddBooks">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d3e3fc" height="605.0" layoutX="177.0" stroke="BLACK" strokeType="INSIDE" width="650.0" />
+        <Text layoutX="226.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD BOOK INVOICE" textAlignment="CENTER" wrappingWidth="550.8035430908203">
+            <font>
+                <Font name="Times New Roman Bold" size="54.0" />
+            </font>
+        </Text>
+        <TableView layoutX="27.0" layoutY="96.0" prefHeight="162.0" prefWidth="340.0">
+            <columns>
+                <TableColumn prefWidth="109.33333778381348" text="SUPPLIER ID" />
+                <TableColumn prefWidth="229.99998474121094" text="SUPPLIER COMPANY NAME" />
+            </columns>
+        </TableView>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="157.0" layoutX="392.0" layoutY="98.0" stroke="BLACK" strokeType="INSIDE" width="580.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="271.0" layoutX="31.0" layoutY="279.0" stroke="BLACK" strokeType="INSIDE" width="939.0" />
+        <ComboBox fx:id="genreDrop" layoutX="213.0" layoutY="460.0" onAction="#Genre" prefHeight="30.0" prefWidth="265.0" promptText="CHOOSE GENRE" />
+        <ComboBox fx:id="Status" layoutX="659.0" layoutY="378.0" onAction="#Status" prefHeight="32.0" prefWidth="263.0" promptText="CHOOSE STATUS" />
+        <TextField fx:id="BSupplierId" layoutX="719.0" layoutY="117.0" prefHeight="30.0" prefWidth="228.0">
+         <font>
+            <Font name="Berlin Sans FB" size="17.0" />
+         </font></TextField>
+        <TextField fx:id="BSupplierName" layoutX="721.0" layoutY="161.0" prefHeight="30.0" prefWidth="226.0">
+         <font>
+            <Font name="Berlin Sans FB" size="17.0" />
+         </font></TextField>
+        <TextField fx:id="NumberOfBooksDelivered" layoutX="722.0" layoutY="204.0" onAction="#getInvoiceId" prefHeight="30.0" prefWidth="225.0">
+         <font>
+            <Font name="Berlin Sans FB" size="17.0" />
+         </font></TextField>
+        <TextField fx:id="BTitle" layoutX="210.0" layoutY="330.0" prefHeight="30.0" prefWidth="265.0">
+         <font>
+            <Font name="Berlin Sans FB" size="17.0" />
+         </font></TextField>
+        <TextField fx:id="BAuthor" layoutX="210.0" layoutY="374.0" prefHeight="30.0" prefWidth="266.0">
+         <font>
+            <Font name="Berlin Sans FB" size="17.0" />
+         </font></TextField>
+        <TextField fx:id="BSeriesNo" layoutX="211.0" layoutY="417.0" prefHeight="30.0" prefWidth="266.0">
+         <font>
+            <Font name="Berlin Sans FB" size="17.0" />
+         </font></TextField>
+        <TextField fx:id="BShelf" layoutX="213.0" layoutY="501.0" prefHeight="30.0" prefWidth="264.0">
+         <font>
+            <Font name="Berlin Sans FB" size="17.0" />
+         </font></TextField>
+        <Text layoutX="132.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK ID:">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Text>
+        <Text layoutX="109.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK TITLE">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Text>
+        <Text layoutX="132.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AUTHOR">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Text>
+        <Text layoutX="70.0" layoutY="437.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK SERIES NO.">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Text>
+        <Text layoutX="93.0" layoutY="481.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MAJOR GENRE">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Text>
+        <Text layoutX="151.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SHELF:">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Text>
+        <TextField fx:id="BPubDate" layoutX="657.0" layoutY="292.0" prefHeight="30.0" prefWidth="265.0" promptText="YEAR">
+         <font>
+            <Font name="Berlin Sans FB" size="17.0" />
+         </font></TextField>
+        <TextField fx:id="BIsbn" layoutX="657.0" layoutY="336.0" prefHeight="30.0" prefWidth="266.0">
+         <font>
+            <Font name="Berlin Sans FB" size="17.0" />
+         </font></TextField>
+        <TextField fx:id="BSellingPrice" layoutX="660.0" layoutY="463.0" prefHeight="30.0" prefWidth="264.0">
+            <font>
+                <Font name="Berlin Sans FB" size="17.0" />
+            </font></TextField>
+        <Text layoutX="494.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PUBLICATION DATE">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Text>
+        <Text layoutX="609.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Text>
+        <Text layoutX="542.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK STATUS">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Text>
+        <Text layoutX="528.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SUPPLIER PRICE">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Text>
+        <Text layoutX="537.0" layoutY="484.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SELLING PRICE">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Text>
+        <TextField fx:id="BSupplierPrice" layoutX="660.0" layoutY="422.0" prefHeight="30.0" prefWidth="264.0">
+         <font>
+            <Font name="Berlin Sans FB" size="17.0" />
+         </font></TextField>
+        <Text layoutX="430.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INVOICE ID:">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Text>
+        <Text layoutX="616.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SUPPLIER ID">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Text>
+        <Text layoutX="588.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SUPPLIER NAME">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Text>
+        <Text layoutX="582.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK QUANTITY">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Text>
+        <Button layoutX="890.0" layoutY="554.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="80.0" text="HOME" />
+        <Button fx:id="saveButton" layoutX="800.0" layoutY="554.0" mnemonicParsing="false" onAction="#addingtian" prefHeight="31.0" prefWidth="80.0" text="SAVE" />
+        <TextField fx:id="BBookId" layoutX="209.0" layoutY="291.0" onAction="#Bidgenerate" prefHeight="30.0" prefWidth="265.0">
+         <font>
+            <Font name="Berlin Sans FB" size="17.0" />
+         </font></TextField>
+        <TextField fx:id="BInvoiceId" layoutX="424.0" layoutY="173.0" prefHeight="24.0" prefWidth="100.0">
+         <font>
+            <Font name="Berlin Sans FB" size="17.0" />
+         </font></TextField>
+      <TextField fx:id="BQuantity" layoutX="659.0" layoutY="502.0" prefHeight="30.0" prefWidth="264.0">
+         <font>
+            <Font name="Berlin Sans FB" size="17.0" />
+         </font>
+      </TextField>
+      <Text layoutX="569.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" text="QUANTITY">
+         <font>
+            <Font name="Berlin Sans FB" size="18.0" />
+         </font>
+      </Text>
+    </children>
+</AnchorPane>
