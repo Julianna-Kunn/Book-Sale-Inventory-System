@@ -18,41 +18,31 @@
                 <Font name="Times New Roman Bold" size="54.0" />
             </font>
         </Text>
-        <TableView layoutX="27.0" layoutY="96.0" prefHeight="162.0" prefWidth="340.0">
-            <columns>
-                <TableColumn prefWidth="109.33333778381348" text="SUPPLIER ID" />
-                <TableColumn prefWidth="229.99998474121094" text="SUPPLIER COMPANY NAME" />
-            </columns>
-        </TableView>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="157.0" layoutX="392.0" layoutY="98.0" stroke="BLACK" strokeType="INSIDE" width="580.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="157.0" layoutX="399.0" layoutY="98.0" stroke="BLACK" strokeType="INSIDE" width="573.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="271.0" layoutX="31.0" layoutY="279.0" stroke="BLACK" strokeType="INSIDE" width="939.0" />
         <ComboBox fx:id="genreDrop" layoutX="213.0" layoutY="460.0" onAction="#Genre" prefHeight="30.0" prefWidth="265.0" promptText="CHOOSE GENRE" />
         <ComboBox fx:id="Status" layoutX="659.0" layoutY="378.0" onAction="#Status" prefHeight="32.0" prefWidth="263.0" promptText="CHOOSE STATUS" />
-        <TextField fx:id="BSupplierId" layoutX="719.0" layoutY="117.0" prefHeight="30.0" prefWidth="228.0">
+        <TextField fx:id="BSupplierId" layoutX="723.0" layoutY="146.0" prefHeight="30.0" prefWidth="228.0">
          <font>
             <Font name="Berlin Sans FB" size="17.0" />
          </font></TextField>
-        <TextField fx:id="BSupplierName" layoutX="721.0" layoutY="161.0" prefHeight="30.0" prefWidth="226.0">
+        <TextField fx:id="NumberOfBooksDelivered" layoutX="722.0" layoutY="189.0" prefHeight="30.0" prefWidth="225.0">
          <font>
             <Font name="Berlin Sans FB" size="17.0" />
          </font></TextField>
-        <TextField fx:id="BBookQuantity" layoutX="722.0" layoutY="204.0" prefHeight="30.0" prefWidth="225.0">
+        <TextField fx:id="BTitle" layoutX="210.0" layoutY="330.0" prefHeight="30.0" prefWidth="265.0">
          <font>
             <Font name="Berlin Sans FB" size="17.0" />
          </font></TextField>
-        <TextField fx:id="BTitle" layoutX="210.0" layoutY="330.0" onAction="#Save" prefHeight="30.0" prefWidth="265.0">
+        <TextField fx:id="BAuthor" layoutX="210.0" layoutY="374.0" prefHeight="30.0" prefWidth="266.0">
          <font>
             <Font name="Berlin Sans FB" size="17.0" />
          </font></TextField>
-        <TextField fx:id="BAuthor" layoutX="210.0" layoutY="374.0" onAction="#Save" prefHeight="30.0" prefWidth="266.0">
+        <TextField fx:id="BSeriesNo" layoutX="211.0" layoutY="417.0" prefHeight="30.0" prefWidth="266.0">
          <font>
             <Font name="Berlin Sans FB" size="17.0" />
          </font></TextField>
-        <TextField fx:id="BSeriesNo" layoutX="211.0" layoutY="417.0" onAction="#Save" prefHeight="30.0" prefWidth="266.0">
-         <font>
-            <Font name="Berlin Sans FB" size="17.0" />
-         </font></TextField>
-        <TextField fx:id="BShelf" layoutX="213.0" layoutY="501.0" onAction="#Save" prefHeight="30.0" prefWidth="264.0">
+        <TextField fx:id="BShelf" layoutX="213.0" layoutY="501.0" prefHeight="30.0" prefWidth="264.0">
          <font>
             <Font name="Berlin Sans FB" size="17.0" />
          </font></TextField>
@@ -86,15 +76,15 @@
                 <Font name="Berlin Sans FB" size="18.0" />
             </font>
         </Text>
-        <TextField fx:id="BPubDate" layoutX="657.0" layoutY="292.0" onAction="#Save" prefHeight="30.0" prefWidth="265.0" promptText="YEAR">
+        <TextField fx:id="BPubDate" layoutX="657.0" layoutY="292.0" prefHeight="30.0" prefWidth="265.0" promptText="YEAR">
          <font>
             <Font name="Berlin Sans FB" size="17.0" />
          </font></TextField>
-        <TextField fx:id="BIsbn" layoutX="657.0" layoutY="336.0" onAction="#Save" prefHeight="30.0" prefWidth="266.0">
+        <TextField fx:id="BIsbn" layoutX="657.0" layoutY="336.0" prefHeight="30.0" prefWidth="266.0">
          <font>
             <Font name="Berlin Sans FB" size="17.0" />
          </font></TextField>
-        <TextField fx:id="BSellingPrice" layoutX="660.0" layoutY="463.0" onAction="#Save" prefHeight="30.0" prefWidth="264.0">
+        <TextField fx:id="BSellingPrice" layoutX="660.0" layoutY="463.0" prefHeight="30.0" prefWidth="264.0">
             <font>
                 <Font name="Berlin Sans FB" size="17.0" />
             </font></TextField>
@@ -123,7 +113,7 @@
                 <Font name="Berlin Sans FB" size="18.0" />
             </font>
         </Text>
-        <TextField fx:id="BSupplierPrice" layoutX="660.0" layoutY="422.0" onAction="#Save" prefHeight="30.0" prefWidth="264.0">
+        <TextField fx:id="BSupplierPrice" layoutX="660.0" layoutY="422.0" prefHeight="30.0" prefWidth="264.0">
          <font>
             <Font name="Berlin Sans FB" size="17.0" />
          </font></TextField>
@@ -132,32 +122,27 @@
                 <Font name="Berlin Sans FB" size="18.0" />
             </font>
         </Text>
-        <Text layoutX="616.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SUPPLIER ID">
+        <Text layoutX="620.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SUPPLIER ID">
             <font>
                 <Font name="Berlin Sans FB" size="18.0" />
             </font>
         </Text>
-        <Text layoutX="588.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SUPPLIER NAME">
-            <font>
-                <Font name="Berlin Sans FB" size="18.0" />
-            </font>
-        </Text>
-        <Text layoutX="582.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK QUANTITY">
+        <Text layoutX="582.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK QUANTITY">
             <font>
                 <Font name="Berlin Sans FB" size="18.0" />
             </font>
         </Text>
         <Button layoutX="890.0" layoutY="554.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="80.0" text="HOME" />
-        <Button fx:id="saveButton" layoutX="800.0" layoutY="554.0" mnemonicParsing="false" onAction="#Save" prefHeight="31.0" prefWidth="80.0" text="SAVE" />
+        <Button fx:id="saveButton" layoutX="800.0" layoutY="554.0" mnemonicParsing="false" onAction="#addingtian" prefHeight="31.0" prefWidth="80.0" text="SAVE" />
         <TextField fx:id="BBookId" layoutX="209.0" layoutY="291.0" onAction="#Bidgenerate" prefHeight="30.0" prefWidth="265.0">
          <font>
             <Font name="Berlin Sans FB" size="17.0" />
          </font></TextField>
-        <TextField fx:id="BInvoiceId" layoutX="424.0" layoutY="173.0" onAction="#Save" prefHeight="24.0" prefWidth="100.0">
+        <TextField fx:id="BInvoiceId" layoutX="424.0" layoutY="173.0" prefHeight="24.0" prefWidth="100.0">
          <font>
             <Font name="Berlin Sans FB" size="17.0" />
          </font></TextField>
-      <TextField fx:id="BQuantity" layoutX="659.0" layoutY="502.0" onAction="#Save" prefHeight="30.0" prefWidth="264.0">
+      <TextField fx:id="BQuantity" layoutX="659.0" layoutY="502.0" prefHeight="30.0" prefWidth="264.0">
          <font>
             <Font name="Berlin Sans FB" size="17.0" />
          </font>
@@ -167,5 +152,13 @@
             <Font name="Berlin Sans FB" size="18.0" />
          </font>
       </Text>
+      <TableView fx:id="InvoiceTable" layoutX="31.0" layoutY="99.0" prefHeight="157.0" prefWidth="347.0">
+        <columns>
+          <TableColumn fx:id="SupplierId" prefWidth="89.33331298828125" text="SUPPLIER ID" />
+          <TableColumn fx:id="InvoiceId" prefWidth="74.66665649414062" text="INVOICE ID" />
+            <TableColumn fx:id="DQuantity" prefWidth="88.00003051757812" text="QUANTITY" />
+            <TableColumn fx:id="DateAdded" prefWidth="95.33331298828125" text="DATE ADDED" />
+        </columns>
+      </TableView>
     </children>
 </AnchorPane>
