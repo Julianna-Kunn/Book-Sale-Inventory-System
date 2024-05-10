@@ -44,8 +44,6 @@ public class AddSupplier implements Initializable {
     @FXML
     private TextField SupplierName;
 
-    @FXML
-    private Button Save;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -60,7 +58,23 @@ public class AddSupplier implements Initializable {
         String birthdate = Birthdate.getText();
         String contactnum = Contactnumber.getText();
 
-        AddSupplier(supplierId, companyName, supplierName, birthdate, contactnum);
+       boolean successful = AddSupplier(supplierId, companyName, supplierName, birthdate, contactnum);
+
+       if(successful){
+           Alert success = new Alert(Alert.AlertType.INFORMATION);
+           success.setTitle("SUPPLIER ADDITION STATUS");
+           success.setHeaderText(null);
+           success.setContentText("Supplier Added Successfully!");
+           success.showAndWait();
+       } else {
+           Alert failed = new Alert(Alert.AlertType.ERROR);
+           failed.setTitle("SUPPLIER ADDITION STATUS");
+           failed.setHeaderText(null);
+           failed.setContentText("Supplier Addition Unsuccessful!");
+           failed.showAndWait();
+       }
+
+        clearInputfields();
     }
 
     @FXML
@@ -117,6 +131,13 @@ public class AddSupplier implements Initializable {
             e.printStackTrace();
             return false; // Indicate failed addition
         }
+    }
+
+    public void clearInputfields(){
+        CompanyName.clear();
+        SupplierName.clear();
+        Birthdate.clear();
+        Contactnumber.clear();
     }
 
 
