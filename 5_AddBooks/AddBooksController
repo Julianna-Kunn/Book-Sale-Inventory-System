@@ -1,6 +1,8 @@
 package com.example.bsis;
 
 import com.sun.javafx.application.PlatformImpl;
+import com.sun.tools.javac.Main;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,12 +12,15 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.net.URL;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.util.ResourceBundle;
+
+import java.util.logging.Logger;
 
 public class AddBooks implements Initializable {
 
@@ -46,7 +51,13 @@ public class AddBooks implements Initializable {
     //============================
 
     @FXML
-    private TextField BBookQuantity;
+    private TextField NumberOfBooksDelivered;
+
+    @FXML
+    private TextField BSupplierId;
+
+    @FXML
+    private TextField BSupplierName;
 
     @FXML
     private TextField BAuthor;
@@ -63,6 +74,22 @@ public class AddBooks implements Initializable {
 
     private PlatformImpl Platform;
 
+    @FXML
+    private TableColumn<ViewInvoiceInformation, Integer> DQuantity;
+
+    @FXML
+    private TableColumn<ViewInvoiceInformation, String> DateAdded;
+
+    @FXML
+    private TableColumn<ViewInvoiceInformation, String> InvoiceId;
+
+    @FXML
+    private TableColumn<ViewInvoiceInformation, String> SupplierId;
+
+    @FXML
+    private TableView<ViewInvoiceInformation> InvoiceTable;
+
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
 
     @FXML
     public String Status() {
@@ -198,7 +225,6 @@ public class AddBooks implements Initializable {
         genreToShelf.put("Almanacs", "Reference Shelf");
         genreToShelf.put("Atlas", "Reference Shelf");
 
-
         // Religious Shelf
         genreToShelf.put("Religion", "Religious Shelf");
         genreToShelf.put("Devotionals", "Religious Shelf");
@@ -220,16 +246,6 @@ public class AddBooks implements Initializable {
         int maxId = getBookId() + 1;
         return "B-" + maxId;
     }
-
-
-    @FXML
-    public String InvoiceIdgenerate() {
-        //int maxInvoice = 2000;
-        int maxInvoice = getInvoiceId() + 1;
-
-        return "INV-" + maxInvoice;
-    }
-
 
     @FXML
     public int getBookId() {
@@ -256,30 +272,6 @@ public class AddBooks implements Initializable {
     }
 
     @FXML
-    public int getInvoiceId() {
-        String url = "jdbc:mysql://localhost:3306/addbookinvoice";
-        String user = "root";
-        String password = "septembersapphire_07";
-
-        int maxId = 2000;
-
-        String sql = "SELECT MAX(CAST(SUBSTRING_INDEX(`INVOICE ID`, '-', -1) AS UNSIGNED)) FROM addbookinvoice.addbooksinfo";
-        try (Connection conn = DriverManager.getConnection(url, user, password);
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery();) {
-            if (rs.next()) {
-                int retrieved = rs.getInt(1);
-                if (retrieved > maxId) {
-                    maxId = retrieved;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return maxId;
-    }
-
-    @FXML
     private boolean validateFields(String formType) {
         if (formType.equals("new")) {
            return BTitle.getText().isEmpty() ||
@@ -287,82 +279,110 @@ public class AddBooks implements Initializable {
                     genreDrop.getValue() == null || BShelf.getText().isEmpty() ||
                     BPubDate.getText().isEmpty() || BIsbn.getText().isEmpty() ||
                     Status.getValue() == null || BSellingPrice.getText().isEmpty() ||
-                    BSupplierPrice.getText().isEmpty() ||
-                    BBookQuantity.getText().isEmpty() || BQuantity.getText().isEmpty();
+                    BSupplierPrice.getText().isEmpty() || NumberOfBooksDelivered.getText().isEmpty() || BQuantity.getText().isEmpty();
         } else {
             return false;
         }
     }
 
     private String shelf;
+    private int count = 0;
+
+    private int numberOfBooksDelivered;
+
+    private void initializeArrays(int size) {
+        bookId = new String[size];
+        title = new String[size];
+        author = new String[size];
+        genre = new String[size];
+        status = new String[size];
+        isbn = new String[size];
+        pubDate = new int[size];
+        seriesNo = new int[size];
+        supplierPrice = new double[size];
+        sellingPrice = new double[size];
+        bookquantity = new int[size];
+    }
+
+    private String[] bookId;
+    private String[] title;
+    private String[] author;
+    private String[] genre;
+    private String[] status;
+    private String[] isbn;
+    private int[] pubDate;
+    private int[] seriesNo;
+    private int[] bookquantity;
+    private double[] supplierPrice;
+    private double[] sellingPrice;
 
     @FXML
-    void Save(ActionEvent event) {
-        int bookQuantity = Integer.parseInt(BBookQuantity.getText());
-        String invoiceId = InvoiceIdgenerate(); // Initialize the invoice ID
-        int successfulAdditions = 0;
+    public void addingtian(ActionEvent event) {
+        numberOfBooksDelivered = updateNumberOfBooksDelivered();
+        if(count < numberOfBooksDelivered) {
+            String selectedInvoiceId = BInvoiceId.getText();
+            //BInvoiceId.setText(selectedInvoiceId);
+            String currentBookId = Bidgenerate();
+            String currentTitle = BTitle.getText();
+            String currentAuthor = BAuthor.getText();
+            String currentGenre = genreDrop.getValue();
+            String currentStatus = Status.getValue();
+            String currentIsbn = BIsbn.getText();
+            int currentbookquantity = Integer.parseInt(BQuantity.getText());
+            int currentPubDate = Integer.parseInt(BPubDate.getText());
+            int currentSeriesNo = Integer.parseInt(BSeriesNo.getText());
+            String currentShelf = populateGenreToShelfMap(currentGenre);
+            double currentSupplierPrice = Double.parseDouble(BSupplierPrice.getText());
+            double currentSellingPrice = Prices(currentSupplierPrice, currentShelf);
 
-        // Generate a unique book ID for each book
-        String title = BTitle.getText();
-        String author = BAuthor.getText();
-        String genre = genreDrop.getValue();
-        String status = Status.getValue();
-        String isbn = BIsbn.getText();
-        int pubdate = Integer.parseInt(BPubDate.getText());
-        int seriesNo = Integer.parseInt(BSeriesNo.getText());
-        String shelf = populateGenreToShelfMap(genre);
-        double supplierPrice = Double.parseDouble(BSupplierPrice.getText());
-        double sellingPrice = Prices(supplierPrice, shelf);
-        int bquantity = Integer.parseInt(BQuantity.getText());
+            if (validateFields("new")) {
+                System.out.println("Validation failed: All fields are required.");
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Caution..");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("All fields are required!");
+                errorAlert.showAndWait();
+                return; // Exit the method if validation fails
+            } else {
+                // Store the book details in arrays
+                bookId[count] = currentBookId;
+                title[count] = currentTitle;
+                author[count] = currentAuthor;
+                genre[count] = currentGenre;
+                status[count] = currentStatus;
+                isbn[count] = currentIsbn;
+                pubDate[count] = currentPubDate;
+                seriesNo[count] = currentSeriesNo;
+                supplierPrice[count] = currentSupplierPrice;
+                sellingPrice[count] = currentSellingPrice;
+                bookquantity[count] = currentbookquantity;
 
-        boolean addedSuccessfully = true;
 
-        if (validateFields("new")) {
-            System.out.println("Validation failed: All fields are required.");
+                boolean addedSuccessfully = AddBook(currentBookId, currentTitle, currentAuthor, currentGenre, currentStatus, currentIsbn, currentPubDate, currentSellingPrice, currentSeriesNo, currentShelf, currentSupplierPrice, selectedInvoiceId, currentbookquantity);
+
+                if (addedSuccessfully) {
+                    System.out.println("Successful Addition: " + currentTitle);
+                    count++;
+                } else {
+                    System.out.println("Failed to add book with Title: " + currentTitle);
+                }
+            }
+        } else {
+            System.out.println("BOOK ADDITION UPDATE");
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setTitle("Caution..");
             errorAlert.setHeaderText(null);
-            errorAlert.setContentText("All fields are required!");
+            errorAlert.setContentText("All Books Are Already Added under Invoice: " + BInvoiceId.getText());
             errorAlert.showAndWait();
-        } else {
-            for (int i = 0; i < bquantity; i++) {
-                String bookid = Bidgenerate();
-                addedSuccessfully = AddBook(bookid, title, author, genre, status, isbn, pubdate, sellingPrice, seriesNo, shelf, supplierPrice, invoiceId, 1);
-                if (addedSuccessfully) {
-                    successfulAdditions++;
-                } else {
-                    // If any book addition fails, break out of the loop
-                    break;
-                }
+        }
+
+        if(count == numberOfBooksDelivered){
+            for(int i = 0; i < numberOfBooksDelivered; i++){
+                System.out.println("bookTitles: " + title[i]);
             }
         }
-
-        if (successfulAdditions == bookQuantity) {
-            // Increment the invoice ID only if the successful additions equal the book quantity
-            invoiceId = InvoiceIdgenerate();
-            System.out.println("Invoice ID: " + invoiceId);
-            System.out.println("Validation passed: Proceeding to save data.");
-
-            Alert succAlert = new Alert(Alert.AlertType.INFORMATION);
-            succAlert.setTitle("Success");
-            succAlert.setHeaderText(null);
-            succAlert.setContentText("Book added successfully!");
-            succAlert.showAndWait();
-            BBookQuantity.clear();
-        } else {
-            System.out.println("Validation Failed: No data saved.");
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setTitle("Failed");
-            errorAlert.setHeaderText(null);
-            errorAlert.setContentText("All Book Addition Unsuccessful!");
-            errorAlert.showAndWait();
-        }
-
         clearInputFields();
     }
-
-
-
 
 
     @FXML
@@ -396,7 +416,7 @@ public class AddBooks implements Initializable {
             // Call populateGenreToShelfMap with the selected genre
             BShelf.setText(populateGenreToShelfMap(selectedGenre));
         });
-        BInvoiceId.setText(InvoiceIdgenerate());
+        //BInvoiceId.setText(InvoiceIdgenerate());
         BSupplierPrice.textProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue.isEmpty()){
                 double supplierPrice = Double.parseDouble(newValue);
@@ -406,7 +426,52 @@ public class AddBooks implements Initializable {
             }
         });
 
+        AddBooksInvoice viewInvoice = new AddBooksInvoice();
+        SupplierId.setCellValueFactory(new PropertyValueFactory<ViewInvoiceInformation, String>("supplierid"));
+        InvoiceId.setCellValueFactory(new PropertyValueFactory<ViewInvoiceInformation, String>("invoiceid"));
+        DQuantity.setCellValueFactory(new PropertyValueFactory<ViewInvoiceInformation, Integer>("quantity"));
+        DateAdded.setCellValueFactory(new PropertyValueFactory<ViewInvoiceInformation, String>("timestamp"));
+
+
+        ObservableList<ViewInvoiceInformation> data = getData();
+        for (ViewInvoiceInformation info : data) {
+            System.out.println("Supplier ID: " + info.getSupplierid());
+            System.out.println("Invoice ID: " + info.getInvoiceid());
+            System.out.println("Quantity: " + info.getQuantity());
+            System.out.println("Timestamp: " + info.getTimestamp());
+        }
+
+        // Populate SupplierTable
+        InvoiceTable.setItems(data);
+
+        InvoiceTable.getSelectionModel().selectedItemProperty().addListener(
+                (ObservableValue<? extends ViewInvoiceInformation> observable, ViewInvoiceInformation oldValue, ViewInvoiceInformation newValue) -> {
+                    if (newValue != null) {
+                        // Update text fields with selected row data
+                        BInvoiceId.setText(newValue.getInvoiceid());
+                        BSupplierId.setText(newValue.getSupplierid());
+                        NumberOfBooksDelivered.setText(String.valueOf(newValue.getQuantity()));
+                    }
+                }
+        );
+
+        InvoiceTable.refresh();
+
+        System.out.println("Successful");
+
     }
+
+    @FXML
+    private int updateNumberOfBooksDelivered() {
+        try {
+            numberOfBooksDelivered = Integer.parseInt(NumberOfBooksDelivered.getText());
+        } catch (NumberFormatException e) {
+            numberOfBooksDelivered = 0; // Handle the case when input is not a valid integer
+        }
+        initializeArrays(numberOfBooksDelivered);
+        return numberOfBooksDelivered;
+    }
+
 
     @FXML
     private Button saveButton;
@@ -429,53 +494,42 @@ public class AddBooks implements Initializable {
     @FXML
     private boolean AddBook(String bookid, String title, String author, String genre, String status, String isbn,
                             int pubdate, double sellingPrice,
-                            int seriesNo, String shelf, double supplierPrice, String invoiceid, int bquantity) {
+                            int seriesNo, String shelf, double supplierPrice, String selectedinvoiceid, int bquantity) {
         String url = "jdbc:mysql://localhost:3306/addbookinvoice";
         String user = "root";
         String password = "septembersapphire_07";
 
-        boolean bookAlreadyExists = bookExists(title, author, genre, isbn, pubdate, sellingPrice,
-                seriesNo, shelf, supplierPrice);
+        String sql = "INSERT INTO addbookinvoice.addbooksinfo (`BOOK ID`, `TITLE`,`AUTHOR`, `SERIES NO.`, `GENRE`, `SHELF`, `PUB-DATE`, `ISBN`, `STATUS`, `PRICE`, `SUP-PRICE`, `QUANTITY`, `INVOICE ID`, `TIMESTAMP`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        // If the book already exists, display a message and return false
-        if (bookAlreadyExists) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setTitle("Duplicate Book");
-            errorAlert.setHeaderText(null);
-            errorAlert.setContentText("A book with the same details already exists!");
-            errorAlert.showAndWait();
-            return false;
-        } else {
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            String sql = "INSERT INTO addbookinvoice.addbooksinfo (`BOOK ID`, TITLE, AUTHOR, `SERIES NO.`, GENRE, SHELF, `PUB-DATE`, ISBN, STATUS, PRICE, `SUP-PRICE`, QUANTITY, `INVOICE ID`, `TIMESTAMP`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            pstmt.setString(1, bookid);
+            pstmt.setString(2, title);
+            pstmt.setString(3, author);
+            pstmt.setInt(4, seriesNo);  // Assuming seriesNo is an integer
+            pstmt.setString(5, genre);
+            pstmt.setString(6, shelf);   // Assuming shelf is a string
+            pstmt.setInt(7, pubdate); // Assuming pubDate is a string
+            pstmt.setString(8, isbn);
+            pstmt.setString(9, status);
+            pstmt.setDouble(10, sellingPrice);   // Assuming price is a double
+            pstmt.setDouble(11, supplierPrice); // Assuming supPrice is a double
+            pstmt.setInt(12, bquantity);
+            pstmt.setString(13, selectedinvoiceid);
+            pstmt.setString(14, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-            try (Connection conn = DriverManager.getConnection(url, user, password);
-                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, bookid);
-                pstmt.setString(2, title);
-                pstmt.setString(3, author);
-                pstmt.setInt(4, seriesNo);  // Assuming seriesNo is an integer
-                pstmt.setString(5, genre);
-                pstmt.setString(6, shelf);   // Assuming shelf is a string
-                pstmt.setInt(7, pubdate); // Assuming pubDate is a string
-                pstmt.setString(8, isbn);
-                pstmt.setString(9, status);
-                pstmt.setDouble(10, sellingPrice);   // Assuming price is a double
-                pstmt.setDouble(11, supplierPrice); // Assuming supPrice is a double
-                pstmt.setInt(12, 1);
-                pstmt.setString(13, invoiceid);
-                pstmt.setString(14, " (" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + ")");
-
-                pstmt.executeUpdate();
-                BBookId.setText(Bidgenerate());
-                System.out.println("SAVE: " + Bidgenerate() + " ");
-                // Clear the book quantity field
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            pstmt.executeUpdate();
+            BBookId.setText(Bidgenerate());
+            System.out.println("SAVE: " + Bidgenerate() + " ");
+            // Clear the book quantity field
+            return true; // Indicate successful addition
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Indicate failed addition
         }
-        return false;
     }
+
 
     @FXML
     private boolean bookExists(String title, String author, String genre, String isbn, int pubdate, double sellingPrice,
@@ -502,7 +556,7 @@ public class AddBooks implements Initializable {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
-                return count > 0; // Returns true if there's at least one matching entry in the database
+                return count == 9; // Returns true if there's at least one matching entry in the database
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -510,6 +564,11 @@ public class AddBooks implements Initializable {
 
         return false;
     }
+
+    public ObservableList<ViewInvoiceInformation> getData() {
+        return InvoiceSQLConnector.getInvoiceData();
+    }
+
 
 }
 
