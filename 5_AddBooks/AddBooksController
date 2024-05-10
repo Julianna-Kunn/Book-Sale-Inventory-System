@@ -499,6 +499,16 @@ public class AddBooks implements Initializable {
         String user = "root";
         String password = "septembersapphire_07";
 
+        if (bookExists(title, author, genre, isbn, pubdate, sellingPrice, seriesNo, shelf, supplierPrice)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("The book already exists.");
+            alert.showAndWait();
+            return false;
+        }
+
+        // Proceed to insert the book record
         String sql = "INSERT INTO addbookinvoice.addbooksinfo (`BOOK ID`, `TITLE`,`AUTHOR`, `SERIES NO.`, `GENRE`, `SHELF`, `PUB-DATE`, `ISBN`, `STATUS`, `PRICE`, `SUP-PRICE`, `QUANTITY`, `INVOICE ID`, `TIMESTAMP`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
@@ -556,7 +566,7 @@ public class AddBooks implements Initializable {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
-                return count == 9; // Returns true if there's at least one matching entry in the database
+                return count > 0; // Returns true if there's at least one matching entry in the database
             }
         } catch (SQLException e) {
             e.printStackTrace();
