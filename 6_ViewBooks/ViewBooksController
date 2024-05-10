@@ -1,17 +1,14 @@
 package com.example.bsis;
 
-import com.mysql.cj.protocol.Resultset;
-import com.sun.tools.javac.Main;
+import com.mysql.cj.jdbc.Driver; // Assuming you're using the MySQL Connector/J driver
+
+import java.sql.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-
-import java.sql.*;
-
 import javafx.collections.ObservableList;
-import java.sql.Connection;
 import java.util.logging.Logger;
 
 public class ViewBooks {
@@ -51,33 +48,46 @@ public class ViewBooks {
     private TableColumn<ViewBookInformation, String> VStatus_col;
 
     @FXML
-    private TableColumn<ViewBookInformation, String> VPubDate_col;
+    private TableColumn<ViewBookInformation, Integer> VPubDate_col;
 
     @FXML
-    private TableColumn<ViewBookInformation, Double> VShelf_col;
+    private TableColumn<ViewBookInformation, String> VShelf_col;
+
+    @FXML
+    private TableColumn<ViewBookInformation, Double> VSupplierPrice_col;
 
 
+    @FXML
+    private TableColumn<ViewBookInformation, Integer> VQuantity_col;
+
+    @FXML
+            private TableColumn<ViewBookInformation, String> VInvoiceId_col;
+
+    @FXML
+            private TableColumn<ViewBookInformation, String> VTimestamp_col;
 
     int index = -1;
 
     Connection connect = null;
-    Resultset rs = null;
+    ResultSet rs = null;
     PreparedStatement pstmt = null;
-
-
 
     @FXML
     public void initialize() {
-        VBookID_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("bookId"));
-        VBookTitle_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("title"));
-        VBookAuthor_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("author"));
-        VBseries_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, Integer>("seriesNo"));
-        VGenre_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("genre"));
-        VISBN_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("isbn"));
-        VPrice_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, Double>("sellingPrice"));
-        VStatus_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("status"));
-        VPubDate_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("pubdate"));
-        VShelf_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, Double>("shelf"));
+        VBookID_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("bookId"));//
+        VBookTitle_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("title"));//
+        VBookAuthor_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("author"));//
+        VBseries_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, Integer>("seriesNo"));//
+        VGenre_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("genre"));//
+        VISBN_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("isbn"));//
+        VPrice_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, Double>("sellingPrice"));//
+        VStatus_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("status"));//
+        VPubDate_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, Integer>("pubdate"));//
+        VShelf_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("shelf"));//
+        VQuantity_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, Integer>("quantity"));//
+        VSupplierPrice_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, Double>("supplierPrice"));//
+        VInvoiceId_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("invoiceid"));//
+        VTimestamp_col.setCellValueFactory(new PropertyValueFactory<ViewBookInformation, String>("timestamp"));//
 
         //loadDataFromDatabase();
         ObservableList<ViewBookInformation> data = SQLConnector.getDatausers();
@@ -92,32 +102,35 @@ public class ViewBooks {
         String user = "root";
         String password = "septembersapphire_07";
 
-        String sql = "SELECT `BOOK ID`, TITLE, AUTHOR, `SERIES NO.`, GENRE, SHELF, `PUB-DATE`, ISBN, STATUS, PRICE FROM addbookinvoice.addbooksinfo";
-
+        String sql ="SELECT `BOOK ID`, `TITLE`, `AUTHOR`, `SERIES NO.`, `GENRE`, `SHELF`, `PUB-DATE`, `ISBN`, `STATUS`, `PRICE`, `QUANTITY`, `SUP-PRICE`, `INVOICE ID`, `TIMESTAMP` FROM addbookinvoice.addbooksinfo";
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery();) {
-            // Clear existing items in the TableView
+             ResultSet rs = pstmt.executeQuery()) {
             ViewTableM.getItems().clear();
 
             // Iterate through the ResultSet and populate the TableView
             while (rs.next()) {
-                ViewBookInformation data = new ViewBookInformation(rs.getString("BOOK ID"),
-                        rs.getString("title"),
-                        rs.getString("author"),
-                        rs.getString("genre"),
-                        rs.getString("status"),
-                        rs.getString("isbn"),
-                        rs.getInt("pubdate"),
-                        rs.getDouble("sellingPrice"),
-                        rs.getInt("seriesNo"),
-                        rs.getString("shelf")
-                );  ViewTableM.getItems().add(data);
-
+                ViewBookInformation data = new ViewBookInformation(
+                        rs.getString("BOOK ID"),
+                        rs.getString("TITLE"),
+                        rs.getString("AUTHOR"),
+                        rs.getString("GENRE"),
+                        rs.getString("STATUS"),
+                        rs.getString("ISBN"),
+                        rs.getInt("PUB-DATE"),
+                        rs.getDouble("PRICE"),
+                        rs.getInt("SERIES NO."),
+                        rs.getString("SHELF"),
+                        rs.getInt("QUANTITY"),
+                        rs.getDouble("SUP-PRICE"),
+                        rs.getString("INVOICE ID"),
+                        rs.getString("TIMESTAMP")
+                );
+                ViewTableM.getItems().add(data);
             }
+
         } catch (SQLException e) {
             logger.severe("Error loading MainInterface.fxml: " + e.getMessage());
         }
     }
-
 }
