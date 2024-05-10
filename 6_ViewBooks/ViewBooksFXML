@@ -19,17 +19,20 @@
         <TableView fx:id="ViewTableM" layoutX="5.0" layoutY="96.0" onSort="#initialize" prefHeight="452.0" prefWidth="987.0">
             <columns>
                 <TableColumn fx:id="VBookID_col" prefWidth="61.11111831665039" text="BOOK ID" />
-                <TableColumn fx:id="VBookTitle_col" prefWidth="149.99999237060547" text="TITLE" />
-                
-            <TableColumn fx:id="VBookAuthor_col" prefWidth="103.5555419921875" text="AUTHOR" />
-            <TableColumn fx:id="VBseries_col" prefWidth="95.77767944335938" text="SERIES NO." />
-            <TableColumn fx:id="VGenre_col" prefWidth="71.55557250976562" text="GENRE" />
-            <TableColumn fx:id="VShelf_col" prefWidth="115.77789306640625" text="SHELF" />
-            <TableColumn fx:id="VPubDate_col" prefWidth="76.22210693359375" text="PUB-DATE" />
-            <TableColumn fx:id="VISBN_col" minWidth="0.0" prefWidth="96.66668701171875" text="ISBN" />
-            <TableColumn fx:id="VStatus_col" prefWidth="63.33331298828125" text="STATUS" />
-            <TableColumn fx:id="VPrice_col" prefWidth="71.33331298828125" text="PRICE" />
-            <TableColumn fx:id="VQuantity_col" prefWidth="79.33331298828125" text="QUANTITY" />
+                <TableColumn fx:id="VBookTitle_col" prefWidth="97.99999237060547" text="TITLE" />
+
+            <TableColumn fx:id="VBookAuthor_col" prefWidth="83.99996948242188" text="AUTHOR" />
+            <TableColumn fx:id="VBseries_col" prefWidth="82.66670227050781" text="SERIES NO." />
+            <TableColumn fx:id="VGenre_col" prefWidth="63.3333740234375" text="GENRE" />
+            <TableColumn fx:id="VShelf_col" prefWidth="83.99993896484375" text="SHELF" />
+            <TableColumn fx:id="VPubDate_col" prefWidth="93.33334350585938" text="PUB-DATE" />
+            <TableColumn fx:id="VISBN_col" minWidth="0.0" prefWidth="62.00006103515625" text="ISBN" />
+            <TableColumn fx:id="VStatus_col" prefWidth="66.66668701171875" text="STATUS" />
+            <TableColumn fx:id="VPrice_col" prefWidth="71.99993896484375" text="PRICE" />
+            <TableColumn fx:id="VSupplierPrice_col" prefWidth="44.0" text="SUPPLIER PRICE" />
+            <TableColumn fx:id="VQuantity_col" prefWidth="24.33331298828125" text="QUANTITY" />
+            <TableColumn fx:id="VInvoiceId_col" prefWidth="36.99993896484375" text="INVOICE ID" />
+            <TableColumn fx:id="VTimestamp_col" prefWidth="108.66668701171875" text="TIMESTAMP" />
             </columns>
         </TableView>
       <Button fx:id="Reset" layoutX="889.0" layoutY="558.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="80.0" text="HOME" />
