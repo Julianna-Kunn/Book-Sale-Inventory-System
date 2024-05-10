@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bsis.ViewSuppliers">
+   <children>
+      <TableView fx:id="ViewSupplierTable" layoutX="29.0" layoutY="36.0" prefHeight="327.0" prefWidth="541.0">
+        <columns>
+          <TableColumn fx:id="VSupplierId" prefWidth="75.0" text="SUPPLIER ID" />
+          <TableColumn fx:id="VCompany" prefWidth="75.0" text="COMPANY NAME" />
+            <TableColumn fx:id="VSupplierName" prefWidth="75.0" text="SUPPLIER NAME" />
+            <TableColumn fx:id="VBirthdate" prefWidth="75.0" text="BIRTHDATE" />
+            <TableColumn fx:id="VContact" prefWidth="122.6666259765625" text="CONTACT NUMBER" />
+            <TableColumn fx:id="VTimestamp" prefWidth="116.66668701171875" text="TIMESTAMP" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
