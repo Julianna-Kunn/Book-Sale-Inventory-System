@@ -40,11 +40,11 @@ public class SQLConnector {
 
         Connection connect = ConnectDb();
         ObservableList<ViewBookInformation>  list = FXCollections.observableArrayList();
-        String sql = "SELECT `BOOK ID`, TITLE, AUTHOR, `SERIES NO.`, GENRE, SHELF, `PUB-DATE`, ISBN, STATUS, PRICE FROM addbookinvoice.addbooksinfo";
+        String sql ="SELECT `BOOK ID`, `TITLE`, `AUTHOR`, `SERIES NO.`, `GENRE`, `SHELF`, `PUB-DATE`, `ISBN`, `STATUS`, `PRICE`, `QUANTITY`, `SUP-PRICE`, `INVOICE ID`, `TIMESTAMP` FROM addbookinvoice.addbooksinfo";
 
         try(
-            PreparedStatement pstmt = connect.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery();){
+                PreparedStatement pstmt = connect.prepareStatement(sql);
+                ResultSet rs = pstmt.executeQuery();){
 
             while(rs.next()){
                 list.add(new ViewBookInformation(
@@ -57,7 +57,11 @@ public class SQLConnector {
                         rs.getInt("PUB-DATE"),
                         rs.getDouble("PRICE"),
                         rs.getInt("SERIES NO."),
-                        rs.getString("SHELF")
+                        rs.getString("SHELF"),
+                        rs.getInt("QUANTITY"),
+                        rs.getDouble("SUP-PRICE"),
+                        rs.getString("INVOICE ID"),
+                        rs.getString("TIMESTAMP")
                 ));
             }
         } catch (Exception e){
