@@ -12,10 +12,37 @@ public class ViewBookInformation {
     int pubdate;
     double sellingPrice;
     String shelf;
+    int quantity;
+    double supplierPrice;
+    String invoiceid;
+    String timestamp;
+
+    public double getSupplierPrice() {
+        return supplierPrice;
+    }
+
+    public void setSupplierPrice(double supplierPrice) {
+        this.supplierPrice = supplierPrice;
+    }
+
+    public String getInvoiceid() {
+        return invoiceid;
+    }
+
+    public void setInvoiceid(String invoiceid) {
+        this.invoiceid = invoiceid;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
 
     public ViewBookInformation (String bookId, String title, String author, String genre, String status, String isbn,
-                                int pubdate, double sellingPrice,
-                                int seriesNo, String shelf) {
+                                int pubdate, double sellingPrice, int seriesNo, String shelf, int quantity, double supplierPrice, String invoiceid, String timestamp) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
@@ -26,6 +53,10 @@ public class ViewBookInformation {
         this.pubdate = pubdate;
         this.sellingPrice = sellingPrice;
         this.shelf = shelf;
+        this.quantity = quantity;
+        this.supplierPrice = supplierPrice;
+        this.invoiceid = invoiceid;
+        this.timestamp = timestamp;
     }
 
     public void setBookId(String bookId) {
@@ -108,8 +139,14 @@ public class ViewBookInformation {
         return title;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
 
 
 }
-
-
