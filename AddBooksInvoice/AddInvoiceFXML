@@ -57,11 +57,11 @@
             </font>
         </Text>
         <Button layoutX="890.0" layoutY="554.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="80.0" text="HOME" />
-        <Button fx:id="saveButton" layoutX="793.0" layoutY="554.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="80.0" text="SAVE" />
+        <Button fx:id="saveButton" layoutX="576.0" layoutY="406.0" mnemonicParsing="false" onAction="#ADDBOOKINFO" prefHeight="31.0" prefWidth="80.0" text="SAVE" />
         <TextField fx:id="BInvoiceId" layoutX="424.0" layoutY="312.0" prefHeight="24.0" prefWidth="100.0">
             <font>
                 <Font name="Berlin Sans FB" size="17.0" />
             </font></TextField>
-      <Button fx:id="ADDBOOKINFO" layoutX="585.0" layoutY="406.0" mnemonicParsing="false" onAction="#ADDBOOKINFO" prefHeight="31.0" prefWidth="194.0" text="ADD BOOK INFORMATION" />
+      <Button fx:id="ADDBOOKINFO" layoutX="680.0" layoutY="406.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="194.0" text="ADD BOOK INFORMATION" />
     </children>
 </AnchorPane>
