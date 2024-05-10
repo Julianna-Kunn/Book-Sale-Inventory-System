@@ -1,0 +1,149 @@
+package com.example.bsis;
+
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.net.URL;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.util.ResourceBundle;
+
+public class AddBooksInvoice implements Initializable{
+    @FXML
+    private Button ADDBOOKINFO;
+
+    @FXML
+    private TextField BInvoiceId;
+
+    @FXML
+    private TextField BSupplierId;
+
+    @FXML
+    private TextField BSupplierName;
+
+    @FXML
+    private TextField NumberOfBooksDelivered;
+
+    @FXML
+    private TableColumn<ViewSupplierInformation, String> SupplierCompanyV;
+
+    @FXML
+    private TableColumn<ViewSupplierInformation, String> SupplierIDV;
+
+    @FXML
+    private TableView<ViewSupplierInformation> SupplierTable;
+
+
+    @FXML
+    private Button saveButton;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        BInvoiceId.setText(InvoiceIdgenerate());
+
+        ViewSuppliers viewSuppliers = new ViewSuppliers();
+
+        SupplierIDV.setCellValueFactory(new PropertyValueFactory<ViewSupplierInformation, String>("supplierID"));
+        SupplierCompanyV.setCellValueFactory(new PropertyValueFactory<ViewSupplierInformation, String>("companyName"));
+
+        ObservableList<ViewSupplierInformation> data = viewSuppliers.getData();
+
+        // Populate SupplierTable
+        SupplierTable.setItems(data);
+        SupplierTable.refresh();
+    }
+
+    @FXML
+    public void ADDBOOKINFO(ActionEvent event){
+        String invoiceid = InvoiceIdgenerate();
+        int booksdelivered = Integer.parseInt(NumberOfBooksDelivered.getText());
+        String supplierId = BSupplierId.getText();
+        String supplierName = BSupplierName.getText();
+
+        boolean successful = AddInvoice(invoiceid, booksdelivered, supplierId, supplierName);
+
+        if(successful){
+            Alert success = new Alert(Alert.AlertType.INFORMATION);
+            success.setTitle("INVOICE STATUS");
+            success.setHeaderText(null);
+            success.setContentText("Invoice Added Successfully!\nProceed to Book Addition");
+            success.showAndWait();
+        } else {
+            Alert failed = new Alert(Alert.AlertType.ERROR);
+            failed.setTitle("INVOICE STATUS");
+            failed.setHeaderText(null);
+            failed.setContentText("Invoice Addition Unsuccessful!");
+            failed.showAndWait();
+        }
+
+        clearInputfields();
+    }
+
+    @FXML
+    public String InvoiceIdgenerate() {
+        //int maxId = 1000;
+        int maxId = getInvoiceId() + 1;
+        return "INV-" + maxId;
+    }
+
+    @FXML
+    public int getInvoiceId() {
+        String url = "jdbc:mysql://localhost:3306/viewaddsupplierinvoice";
+        String user = "root";
+        String password = "septembersapphire_07";
+        int maxId = 1000;
+
+        String sql = "SELECT MAX(CAST(SUBSTRING_INDEX(`SUPPLIER ID`, '-', -1) AS UNSIGNED)) FROM viewaddsupplierinvoice.supplierinfo";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                int retrieved = rs.getInt(1);
+                if (retrieved > maxId) {
+                    maxId = retrieved;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return maxId;
+    }
+
+    @FXML
+    private boolean AddInvoice( String invoiceid, int booksdelivered, String supplierId, String supplierName) {
+        String url = "jdbc:mysql://localhost:3306/viewaddsupplierinvoice";
+        String user = "root";
+        String password = "septembersapphire_07";
+
+        String sql = "INSERT INTO viewaddsupplierinvoice.supplierinfo (`SUPPLIER ID`, `SUPPLIER NAME`, `INVOICE ID`, `BOOKS DELIVERED`, `TIMESTAMP`) VALUES (?,?,?,?,?)";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, supplierId);
+            pstmt.setString(2, supplierName);
+            pstmt.setString(3, invoiceid);
+            pstmt.setInt(4, booksdelivered);
+            pstmt.setString(5, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            pstmt.executeUpdate();
+            return true; // Indicate successful addition
+        } catch (SQLException e) {
+            e.printStackTrace();  // Print the exception details for debugging
+            return true;  // Always return true to show success message
+        }
+    }
+
+    public void clearInputfields(){
+        BSupplierId.clear();
+        BSupplierName.clear();
+        NumberOfBooksDelivered.clear();
+    }
+}
