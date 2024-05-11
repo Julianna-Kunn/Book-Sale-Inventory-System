@@ -127,18 +127,20 @@ public class ViewUpdateInfoBook {
 
     @FXML
     void handleStatusSelection(ActionEvent event) {
-        String selectedStatus = Status.getSelectionModel().getSelectedItem().toString();
+        String selectedStatus = Status.getSelectionModel().getSelectedItem();
 
         Alert WindowPane = new Alert(Alert.AlertType.INFORMATION);
         WindowPane.setTitle("Selected Status");
 
         if (selectedStatus != null) {
             WindowPane.setHeaderText("You selected: " + selectedStatus);
+        } else {
+            WindowPane.setHeaderText("No status selected");
         }
 
         WindowPane.showAndWait();
-
     }
+
 
     @FXML
     void Genre(ActionEvent event) {
@@ -355,5 +357,39 @@ public class ViewUpdateInfoBook {
         }
     }
 
+    @FXML
+    private void updateBook(ActionEvent event) {
+        ViewBookInformation selectedItem = ViewTableM.getSelectionModel().getSelectedItem();
+
+        if (selectedItem != null) {
+            // Update the selected item's properties with the newly entered data
+            selectedItem.setTitle(BTitle_d.getText());
+            selectedItem.setAuthor(BAuthor_d.getText());
+            selectedItem.setSeriesNo(Integer.parseInt(BSeriesNo_d.getText()));
+            selectedItem.setGenre(genreDrop.getSelectionModel().getSelectedItem());
+            selectedItem.setShelf(populateGenreToShelfMap(selectedItem.getGenre()));
+            selectedItem.setPubdate(Integer.parseInt(BPubDate_d.getText()));
+            selectedItem.setIsbn(BIsbn_d.getText());
+            selectedItem.setStatus(Status.getSelectionModel().getSelectedItem());
+            selectedItem.setSellingPrice(Double.parseDouble(BSellingPrice_d.getText()));
+            selectedItem.setSupplierPrice(Double.parseDouble(BSupplierPrice_d.getText()));
+            selectedItem.setQuantity(Integer.parseInt(BQuantity_d.getText()));
+            selectedItem.setInvoiceid(BInvoiceId_d.getText());
+            selectedItem.setTimestamp(BTimeStamp_d.getText());
+
+            // Update the item in the database using your SQLConnector class
+            SQLConnector.updateData(selectedItem);
+
+            // Refresh the TableView to reflect the changesl
+            ViewTableM.refresh();
+        } else {
+            // If no item is selected, display an error message
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Error");
+            errorAlert.setHeaderText(null);
+            errorAlert.setContentText("Please select an item to update.");
+            errorAlert.showAndWait();
+        }
+    }
 
 }
