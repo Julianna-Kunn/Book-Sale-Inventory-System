@@ -40,11 +40,11 @@ public class SQLConnector {
 
         Connection connect = ConnectDb();
         ObservableList<ViewBookInformation>  list = FXCollections.observableArrayList();
-        String sql = "SELECT `BOOK ID`, TITLE, AUTHOR, `SERIES NO.`, GENRE, SHELF, `PUB-DATE`, ISBN, STATUS, PRICE, QUANTITY, `SUP-PRICE`, `INVOICE ID`, TIMESTAMP FROM addbookinvoice.addbooksinfo";
+        String sql ="SELECT `BOOK ID`, `TITLE`, `AUTHOR`, `SERIES NO.`, `GENRE`, `SHELF`, `PUB-DATE`, `ISBN`, `STATUS`, `PRICE`, `QUANTITY`, `SUP-PRICE`, `INVOICE ID`, `TIMESTAMP` FROM addbookinvoice.addbooksinfo";
 
         try(
-            PreparedStatement pstmt = connect.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery();){
+                PreparedStatement pstmt = connect.prepareStatement(sql);
+                ResultSet rs = pstmt.executeQuery();){
 
             while(rs.next()){
                 list.add(new ViewBookInformation(
@@ -68,6 +68,51 @@ public class SQLConnector {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public static void updateData(ViewBookInformation selectedItem) {
+        String sql = "UPDATE addbooksinfo SET TITLE = ?, AUTHOR = ?, `SERIES NO.` = ?, GENRE = ?, SHELF = ?, " +
+                "`PUB-DATE` = ?, ISBN = ?, STATUS = ?, PRICE = ?, QUANTITY = ?, `SUP-PRICE` = ?, `INVOICE ID` = ?, TIMESTAMP = ? " +
+                "WHERE `BOOK ID` = ?";
+        try (Connection connect = ConnectDb();
+             PreparedStatement pstmt = connect.prepareStatement(sql)) {
+            pstmt.setString(1, selectedItem.getTitle());
+            pstmt.setString(2, selectedItem.getAuthor());
+            pstmt.setInt(3, selectedItem.getSeriesNo());
+            pstmt.setString(4, selectedItem.getGenre());
+            pstmt.setString(5, selectedItem.getShelf());
+            pstmt.setInt(6, selectedItem.getPubdate());
+            pstmt.setString(7, selectedItem.getIsbn());
+            pstmt.setString(8, selectedItem.getStatus());
+            pstmt.setDouble(9, selectedItem.getSellingPrice());
+            pstmt.setInt(10, selectedItem.getQuantity());
+            pstmt.setDouble(11, selectedItem.getSupplierPrice());
+            pstmt.setString(12, selectedItem.getInvoiceid());
+            pstmt.setString(13, selectedItem.getTimestamp());
+            pstmt.setString(14, selectedItem.getBookId());
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Update Success");
+                successAlert.setHeaderText(null);
+                successAlert.setContentText("Data updated successfully!");
+                successAlert.showAndWait();
+            } else {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Update Error");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Failed to update data. Please try again.");
+                errorAlert.showAndWait();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Update Error");
+            errorAlert.setHeaderText(null);
+            errorAlert.setContentText("An error occurred while updating data. Please try again.");
+            errorAlert.showAndWait();
+        }
     }
 
 }
