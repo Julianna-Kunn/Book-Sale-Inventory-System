@@ -131,7 +131,7 @@
             <Font name="Berlin Sans FB" size="17.0" />
          </font></TextField>
         <Button fx:id="Save" layoutX="701.0" layoutY="558.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="80.0" text="SAVE" />
-        <Button fx:id="Update" layoutX="795.0" layoutY="558.0" mnemonicParsing="false" onAction="#initialize" prefHeight="31.0" prefWidth="80.0" text="UPDATE" />
+        <Button fx:id="Update" layoutX="795.0" layoutY="558.0" mnemonicParsing="false" onAction="#updateBook" prefHeight="31.0" prefWidth="80.0" text="UPDATE" />
         <Button fx:id="Back" layoutX="889.0" layoutY="558.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="80.0" text="RESET" />
         <TextField fx:id="BInvoiceId_d" layoutX="210.0" layoutY="291.0" prefHeight="30.0" prefWidth="96.0">
          <font>
