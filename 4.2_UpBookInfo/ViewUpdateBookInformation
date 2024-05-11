@@ -292,6 +292,30 @@ public class ViewUpdateInfoBook {
         ObservableList<ViewBookInformation> data = SQLConnector.getDatausers();
         System.out.println("Size of the list: " + data.size());
         ViewTableM.setItems(data);
+
+        ViewTableM.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                // Populate the text fields with data from the selected item
+                BBookId_d.setText(newSelection.getBookId());
+                BTitle_d.setText(newSelection.getTitle());
+                BAuthor_d.setText(newSelection.getAuthor());
+                BInvoiceId_d.setText(newSelection.getInvoiceid());
+                BIsbn_d.setText(newSelection.getIsbn());
+                BPubDate_d.setText(String.valueOf(newSelection.getPubdate()));
+                BQuantity_d.setText(String.valueOf(newSelection.getQuantity()));
+                BSellingPrice_d.setText(String.valueOf(newSelection.getSellingPrice()));
+                BSeriesNo_d.setText(String.valueOf(newSelection.getSeriesNo()));
+                BShelf_d.setText(newSelection.getShelf());
+                BSupplierPrice_d.setText(String.valueOf(newSelection.getSupplierPrice()));
+                BTimeStamp_d.setText(newSelection.getTimestamp());
+
+                // Populate the genre and status ComboBoxes
+                genreDrop.getSelectionModel().select(newSelection.getGenre());
+                Status.getSelectionModel().select(newSelection.getStatus());
+            }
+        });
+
+
         ViewTableM.refresh();
     }
 
@@ -309,7 +333,7 @@ public class ViewUpdateInfoBook {
 
             // Iterate through the ResultSet and populate the TableView
             while (rs.next()) {
-                ViewBookInformation data = new ViewBookInformation(rs.getString("BOOK ID"),
+                ViewBookInformation data = new ViewBookInformation(rs.getString("bookID"),
                         rs.getString("title"),
                         rs.getString("author"),
                         rs.getString("genre"),
