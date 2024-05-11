@@ -163,3 +163,5 @@
       <ComboBox fx:id="genreDrop" layoutX="212.0" layoutY="462.0" onAction="#Genre" prefHeight="25.0" prefWidth="264.0" />
     </children>
 </AnchorPane>
+
+
