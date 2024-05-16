@@ -1,164 +1,364 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bsis.AddBooks">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.system4.AddBook">
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d3e3fc" height="605.0" layoutX="177.0" stroke="BLACK" strokeType="INSIDE" width="650.0" />
-        <Text layoutX="226.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD BOOK INVOICE" textAlignment="CENTER" wrappingWidth="550.8035430908203">
-            <font>
-                <Font name="Times New Roman Bold" size="54.0" />
-            </font>
-        </Text>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="157.0" layoutX="399.0" layoutY="98.0" stroke="BLACK" strokeType="INSIDE" width="573.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="271.0" layoutX="31.0" layoutY="279.0" stroke="BLACK" strokeType="INSIDE" width="939.0" />
-        <ComboBox fx:id="genreDrop" layoutX="213.0" layoutY="460.0" onAction="#Genre" prefHeight="30.0" prefWidth="265.0" promptText="CHOOSE GENRE" />
-        <ComboBox fx:id="Status" layoutX="659.0" layoutY="378.0" onAction="#Status" prefHeight="32.0" prefWidth="263.0" promptText="CHOOSE STATUS" />
-        <TextField fx:id="BSupplierId" layoutX="723.0" layoutY="146.0" prefHeight="30.0" prefWidth="228.0">
-         <font>
-            <Font name="Berlin Sans FB" size="17.0" />
-         </font></TextField>
-        <TextField fx:id="NumberOfBooksDelivered" layoutX="722.0" layoutY="189.0" prefHeight="30.0" prefWidth="225.0">
-         <font>
-            <Font name="Berlin Sans FB" size="17.0" />
-         </font></TextField>
-        <TextField fx:id="BTitle" layoutX="210.0" layoutY="330.0" prefHeight="30.0" prefWidth="265.0">
-         <font>
-            <Font name="Berlin Sans FB" size="17.0" />
-         </font></TextField>
-        <TextField fx:id="BAuthor" layoutX="210.0" layoutY="374.0" prefHeight="30.0" prefWidth="266.0">
-         <font>
-            <Font name="Berlin Sans FB" size="17.0" />
-         </font></TextField>
-        <TextField fx:id="BSeriesNo" layoutX="211.0" layoutY="417.0" prefHeight="30.0" prefWidth="266.0">
-         <font>
-            <Font name="Berlin Sans FB" size="17.0" />
-         </font></TextField>
-        <TextField fx:id="BShelf" layoutX="213.0" layoutY="501.0" prefHeight="30.0" prefWidth="264.0">
-         <font>
-            <Font name="Berlin Sans FB" size="17.0" />
-         </font></TextField>
-        <Text layoutX="132.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK ID:">
-            <font>
-                <Font name="Berlin Sans FB" size="18.0" />
-            </font>
-        </Text>
-        <Text layoutX="109.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK TITLE">
-            <font>
-                <Font name="Berlin Sans FB" size="18.0" />
-            </font>
-        </Text>
-        <Text layoutX="132.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AUTHOR">
-            <font>
-                <Font name="Berlin Sans FB" size="18.0" />
-            </font>
-        </Text>
-        <Text layoutX="70.0" layoutY="437.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK SERIES NO.">
-            <font>
-                <Font name="Berlin Sans FB" size="18.0" />
-            </font>
-        </Text>
-        <Text layoutX="93.0" layoutY="481.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MAJOR GENRE">
-            <font>
-                <Font name="Berlin Sans FB" size="18.0" />
-            </font>
-        </Text>
-        <Text layoutX="151.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SHELF:">
-            <font>
-                <Font name="Berlin Sans FB" size="18.0" />
-            </font>
-        </Text>
-        <TextField fx:id="BPubDate" layoutX="657.0" layoutY="292.0" prefHeight="30.0" prefWidth="265.0" promptText="YEAR">
-         <font>
-            <Font name="Berlin Sans FB" size="17.0" />
-         </font></TextField>
-        <TextField fx:id="BIsbn" layoutX="657.0" layoutY="336.0" prefHeight="30.0" prefWidth="266.0">
-         <font>
-            <Font name="Berlin Sans FB" size="17.0" />
-         </font></TextField>
-        <TextField fx:id="BSellingPrice" layoutX="660.0" layoutY="463.0" prefHeight="30.0" prefWidth="264.0">
+      <Rectangle fx:id="rectangleDesign" arcHeight="5.0" arcWidth="5.0" fill="#d3e3fc" height="600.0" layoutX="305.0" layoutY="2.0" stroke="#00887a" strokeType="INSIDE" width="695.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="604.0" layoutX="-8.0" layoutY="-2.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="312.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="542.0" layoutX="986.0" layoutY="36.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="9.0" AnchorPane.rightAnchor="1.0" />
+      <AnchorPane layoutX="312.0" layoutY="245.0" prefHeight="271.0" prefWidth="673.0" style="-fx-background-color: #1e90ff;" stylesheets="@../../../Stylesheet/dashboardDesign.css">
+         <styleClass>
+            <String fx:value="sign-out" />
+            <String fx:value="shadow" />
+         </styleClass>
+      </AnchorPane>
+      <AnchorPane layoutX="574.0" layoutY="87.0" prefHeight="131.0" prefWidth="411.0" style="-fx-background-color: #1e90ff;" stylesheets="@../../../Stylesheet/dashboardDesign.css" AnchorPane.rightAnchor="15.0">
+         <styleClass>
+            <String fx:value="sign-out" />
+            <String fx:value="shadow" />
+         </styleClass>
+         <children>
+              <TextField fx:id="BSupplierId" layoutX="265.0" layoutY="25.0" prefHeight="32.0" prefWidth="138.0" stylesheets="@../../../Stylesheet/dashboardDesign.css">
+                  <font>
+                      <Font name="Berlin Sans FB" size="17.0" />
+                  </font>
+               <styleClass>
+                  <String fx:value="white-bg" />
+                  <String fx:value="shadow" />
+               </styleClass>
+            </TextField>
+              <TextField fx:id="NumberOfBooksDelivered" layoutX="265.0" layoutY="66.0" prefHeight="32.0" prefWidth="138.0" stylesheets="@../../../Stylesheet/dashboardDesign.css">
+                  <font>
+                      <Font name="Berlin Sans FB" size="17.0" />
+                  </font>
+               <styleClass>
+                  <String fx:value="white-bg" />
+                  <String fx:value="shadow" />
+               </styleClass>
+            </TextField>
+              <Text layoutX="144.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK QUANTITY">
+                  <font>
+                      <Font name="Berlin Sans FB" size="15.0" />
+                  </font>
+              </Text>
+              <Text layoutX="171.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SUPPLIER ID">
+                  <font>
+                      <Font name="Berlin Sans FB" size="15.0" />
+                  </font>
+              </Text>
+              <TextField fx:id="BInvoiceId" layoutX="14.0" layoutY="51.0" prefHeight="24.0" prefWidth="100.0" stylesheets="@../../../Stylesheet/dashboardDesign.css">
+                  <font>
+                      <Font name="Berlin Sans FB" size="17.0" />
+                  </font>
+               <styleClass>
+                  <String fx:value="white-bg" />
+                  <String fx:value="shadow" />
+               </styleClass>
+            </TextField>
+              <Text layoutX="26.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INVOICE ID:">
+                  <font>
+                      <Font name="Berlin Sans FB" size="15.0" />
+                  </font>
+              </Text>
+         </children>
+      </AnchorPane>
+        <ComboBox fx:id="genreDrop" layoutX="457.0" layoutY="433.0" onAction="#Genre" prefHeight="30.0" prefWidth="181.0" promptText="CHOOSE GENRE" stylesheets="@../../../Stylesheet/dashboardDesign.css">
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass></ComboBox>
+        <ComboBox fx:id="Status" layoutX="784.0" layoutY="338.0" onAction="#Status" prefHeight="32.0" prefWidth="181.0" promptText="CHOOSE STATUS" stylesheets="@../../../Stylesheet/dashboardDesign.css">
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass></ComboBox>
+        <TextField fx:id="BTitle" layoutX="457.0" layoutY="300.0" prefHeight="32.0" prefWidth="181.0" stylesheets="@../../../Stylesheet/dashboardDesign.css">
             <font>
                 <Font name="Berlin Sans FB" size="17.0" />
-            </font></TextField>
-        <Text layoutX="494.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PUBLICATION DATE">
+            </font>
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass></TextField>
+        <TextField fx:id="BAuthor" layoutX="457.0" layoutY="345.0" prefHeight="32.0" prefWidth="181.0" stylesheets="@../../../Stylesheet/dashboardDesign.css">
             <font>
-                <Font name="Berlin Sans FB" size="18.0" />
+                <Font name="Berlin Sans FB" size="17.0" />
+            </font>
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass></TextField>
+        <TextField fx:id="BSeriesNo" layoutX="457.0" layoutY="389.0" prefHeight="32.0" prefWidth="181.0" stylesheets="@../../../Stylesheet/dashboardDesign.css">
+            <font>
+                <Font name="Berlin Sans FB" size="17.0" />
+            </font>
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass></TextField>
+        <TextField fx:id="BShelf" layoutX="457.0" layoutY="476.0" prefHeight="32.0" prefWidth="181.0" stylesheets="@../../../Stylesheet/dashboardDesign.css">
+            <font>
+                <Font name="Berlin Sans FB" size="17.0" />
+            </font>
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass></TextField>
+        <Text layoutX="389.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK ID:">
+            <font>
+                <Font name="Berlin Sans FB" size="15.0" />
             </font>
         </Text>
-        <Text layoutX="609.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN">
+        <Text layoutX="370.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK TITLE">
             <font>
-                <Font name="Berlin Sans FB" size="18.0" />
+                <Font name="Berlin Sans FB" size="15.0" />
             </font>
         </Text>
-        <Text layoutX="542.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK STATUS">
+        <Text layoutX="390.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AUTHOR">
             <font>
-                <Font name="Berlin Sans FB" size="18.0" />
+                <Font name="Berlin Sans FB" size="15.0" />
             </font>
         </Text>
-        <Text layoutX="528.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SUPPLIER PRICE">
+        <Text layoutX="342.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK SERIES NO.">
             <font>
-                <Font name="Berlin Sans FB" size="18.0" />
+                <Font name="Berlin Sans FB" size="15.0" />
             </font>
         </Text>
-        <Text layoutX="537.0" layoutY="484.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SELLING PRICE">
+        <Text layoutX="351.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MAJOR GENRE">
             <font>
-                <Font name="Berlin Sans FB" size="18.0" />
+                <Font name="Berlin Sans FB" size="15.0" />
             </font>
         </Text>
-        <TextField fx:id="BSupplierPrice" layoutX="660.0" layoutY="422.0" prefHeight="30.0" prefWidth="264.0">
+        <Text layoutX="410.0" layoutY="496.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SHELF:">
+            <font>
+                <Font name="Berlin Sans FB" size="15.0" />
+            </font>
+        </Text>
+        <TextField fx:id="BPubDate" layoutX="784.0" layoutY="260.0" prefHeight="32.0" prefWidth="181.0" promptText="YEAR" stylesheets="@../../../Stylesheet/dashboardDesign.css">
+            <font>
+                <Font name="Berlin Sans FB" size="17.0" />
+            </font>
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass></TextField>
+        <TextField fx:id="BIsbn" layoutX="784.0" layoutY="300.0" prefHeight="32.0" prefWidth="181.0" stylesheets="@../../../Stylesheet/dashboardDesign.css">
+            <font>
+                <Font name="Berlin Sans FB" size="17.0" />
+            </font>
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass></TextField>
+        <TextField fx:id="BSellingPrice" layoutX="782.0" layoutY="425.0" prefHeight="32.0" prefWidth="181.0" stylesheets="@../../../Stylesheet/dashboardDesign.css">
+            <font>
+                <Font name="Berlin Sans FB" size="17.0" />
+            </font>
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass></TextField>
+        <Text layoutX="647.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PUBLICATION DATE">
+            <font>
+                <Font name="Berlin Sans FB" size="15.0" />
+            </font>
+        </Text>
+        <Text layoutX="747.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN">
+            <font>
+                <Font name="Berlin Sans FB" size="15.0" />
+            </font>
+        </Text>
+        <Text layoutX="689.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK STATUS">
+            <font>
+                <Font name="Berlin Sans FB" size="15.0" />
+            </font>
+        </Text>
+        <Text layoutX="671.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SUPPLIER PRICE">
+            <font>
+                <Font name="Berlin Sans FB" size="15.0" />
+            </font>
+        </Text>
+        <Text layoutX="675.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SELLING PRICE">
+            <font>
+                <Font name="Berlin Sans FB" size="15.0" />
+            </font>
+        </Text>
+        <TextField fx:id="BSupplierPrice" layoutX="782.0" layoutY="382.0" prefHeight="32.0" prefWidth="181.0" stylesheets="@../../../Stylesheet/dashboardDesign.css">
+            <font>
+                <Font name="Berlin Sans FB" size="17.0" />
+            </font>
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass></TextField>
+        <Button layoutX="885.0" layoutY="523.0" mnemonicParsing="false" onAction="#backToAddInvoice" prefHeight="31.0" prefWidth="80.0" text="Back">
          <font>
-            <Font name="Berlin Sans FB" size="17.0" />
-         </font></TextField>
-        <Text layoutX="430.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INVOICE ID:">
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+        <Button fx:id="saveButton" layoutX="793.0" layoutY="523.0" mnemonicParsing="false" onAction="#addingtian" prefHeight="31.0" prefWidth="80.0" stylesheets="@../../../Stylesheet/dashboardDesign.css" text="SAVE">
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+        <TextField fx:id="BBookId" layoutX="457.0" layoutY="258.0" onAction="#Bidgenerate" prefHeight="32.0" prefWidth="181.0" stylesheets="@../../../Stylesheet/dashboardDesign.css">
             <font>
-                <Font name="Berlin Sans FB" size="18.0" />
+                <Font name="Berlin Sans FB" size="17.0" />
+            </font>
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass></TextField>
+        <TextField fx:id="BQuantity" layoutX="782.0" layoutY="469.0" prefHeight="32.0" prefWidth="181.0" stylesheets="@../../../Stylesheet/dashboardDesign.css">
+            <font>
+                <Font name="Berlin Sans FB" size="17.0" />
+            </font>
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass>
+        </TextField>
+        <Text layoutX="700.0" layoutY="489.0" strokeType="OUTSIDE" strokeWidth="0.0" text="QUANTITY">
+            <font>
+                <Font name="Berlin Sans FB" size="15.0" />
             </font>
         </Text>
-        <Text layoutX="620.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SUPPLIER ID">
-            <font>
-                <Font name="Berlin Sans FB" size="18.0" />
-            </font>
-        </Text>
-        <Text layoutX="582.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK QUANTITY">
-            <font>
-                <Font name="Berlin Sans FB" size="18.0" />
-            </font>
-        </Text>
-        <Button layoutX="890.0" layoutY="554.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="80.0" text="HOME" />
-        <Button fx:id="saveButton" layoutX="800.0" layoutY="554.0" mnemonicParsing="false" onAction="#addingtian" prefHeight="31.0" prefWidth="80.0" text="SAVE" />
-        <TextField fx:id="BBookId" layoutX="209.0" layoutY="291.0" onAction="#Bidgenerate" prefHeight="30.0" prefWidth="265.0">
+        <TableView fx:id="InvoiceTable" layoutX="312.0" layoutY="67.0" prefHeight="170.0" prefWidth="256.0" styleClass="shadow" stylesheets="@../../../Stylesheet/dashboardDesign.css">
+            <columns>
+                <TableColumn fx:id="SupplierId" prefWidth="94.0" text="SUPPLIER ID" />
+                <TableColumn fx:id="InvoiceId" prefWidth="76.0" text="INVOICE ID" />
+                <TableColumn fx:id="DQuantity" prefWidth="77.0" text="QUANTITY" />
+                <TableColumn fx:id="DateAdded" prefWidth="91.0" text="DATE ADDED" />
+            </columns>
+        </TableView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="58.0" layoutX="304.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="696.0" AnchorPane.bottomAnchor="542.0" AnchorPane.topAnchor="0.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="36.0" layoutX="305.0" layoutY="568.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="696.0" AnchorPane.bottomAnchor="-3.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00887a" height="58.0" layoutX="-4.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="308.0" AnchorPane.bottomAnchor="542.0" AnchorPane.topAnchor="0.0" />
+      <Line endX="-122.0" endY="579.0" layoutX="428.0" layoutY="23.0" startX="-125.0" startY="-27.0" strokeWidth="3.0" />
+      <Line endX="274.878662109375" endY="-5.0000152587890625" layoutX="28.0" layoutY="62.0" startX="-31.0000057220459" startY="-5.0" strokeWidth="3.0" />
+      <ImageView fitHeight="62.0" fitWidth="212.0" layoutX="44.0" layoutY="-5.0">
+         <image>
+            <Image url="@Images/booksale1.png" />
+         </image>
+      </ImageView>
+      <Button id="white" fx:id="userInfo" layoutX="104.0" layoutY="67.0" mnemonicParsing="false" onAction="#adminInfo" prefHeight="100.0" prefWidth="106.0" stylesheets="@../../../Stylesheet/stylesheet.css" />
+      <ImageView fitHeight="76.0" fitWidth="80.0" layoutX="118.0" layoutY="74.0">
+         <image>
+            <Image url="@Images/user_.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="userIdLabel" layoutX="87.0" layoutY="174.0" prefHeight="36.0" prefWidth="142.0" textAlignment="CENTER">
          <font>
-            <Font name="Berlin Sans FB" size="17.0" />
-         </font></TextField>
-        <TextField fx:id="BInvoiceId" layoutX="424.0" layoutY="173.0" prefHeight="24.0" prefWidth="100.0">
-         <font>
-            <Font name="Berlin Sans FB" size="17.0" />
-         </font></TextField>
-      <TextField fx:id="BQuantity" layoutX="659.0" layoutY="502.0" prefHeight="30.0" prefWidth="264.0">
-         <font>
-            <Font name="Berlin Sans FB" size="17.0" />
+            <Font name="Crimson Text Bold" size="20.0" />
          </font>
-      </TextField>
-      <Text layoutX="569.0" layoutY="523.0" strokeType="OUTSIDE" strokeWidth="0.0" text="QUANTITY">
+      </Label>
+      <Line endX="100.0" layoutX="150.0" layoutY="210.0" startX="-100.0" />
+      <Button id="white" fx:id="backAdminHome" layoutX="32.0" layoutY="226.0" mnemonicParsing="false" onAction="#BackButtonDashboard" prefHeight="36.0" prefWidth="251.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Dashboard" AnchorPane.bottomAnchor="338.0" AnchorPane.topAnchor="226.0">
          <font>
-            <Font name="Berlin Sans FB" size="18.0" />
+            <Font name="Crimson Text Regular" size="15.0" />
          </font>
-      </Text>
-      <TableView fx:id="InvoiceTable" layoutX="31.0" layoutY="99.0" prefHeight="157.0" prefWidth="347.0">
-        <columns>
-          <TableColumn fx:id="SupplierId" prefWidth="89.33331298828125" text="SUPPLIER ID" />
-          <TableColumn fx:id="InvoiceId" prefWidth="74.66665649414062" text="INVOICE ID" />
-            <TableColumn fx:id="DQuantity" prefWidth="88.00003051757812" text="QUANTITY" />
-            <TableColumn fx:id="DateAdded" prefWidth="95.33331298828125" text="DATE ADDED" />
-        </columns>
-      </TableView>
+      </Button>
+      <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="50.0" layoutY="230.0">
+         <image>
+            <Image url="@Images/dashboard.png" />
+         </image>
+      </ImageView>
+      <Button id="grey" layoutX="32.0" layoutY="274.0" mnemonicParsing="false" onAction="#signUp" prefHeight="36.0" prefWidth="251.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Sign-Up an Account" AnchorPane.bottomAnchor="290.0" AnchorPane.topAnchor="274.0">
+         <font>
+            <Font name="Crimson Text Regular" size="15.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="44.0" layoutY="279.0">
+         <image>
+            <Image url="@Images/signup.png" />
+         </image>
+      </ImageView>
+      <Button id="white" layoutX="33.0" layoutY="321.0" mnemonicParsing="false" onAction="#SuppliersButton" prefHeight="36.0" prefWidth="251.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Suppliers" AnchorPane.bottomAnchor="243.0" AnchorPane.topAnchor="321.0">
+         <font>
+            <Font name="Crimson Text Regular" size="15.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="44.0" layoutY="325.0">
+         <image>
+            <Image url="@Images/suppliers.png" />
+         </image>
+      </ImageView>
+      <Button id="white" layoutX="33.0" layoutY="321.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="251.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Suppliers" AnchorPane.topAnchor="370.0">
+         <font>
+            <Font name="Crimson Text Regular" size="15.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="44.0" layoutY="325.0">
+         <image>
+            <Image url="@Images/suppliers.png" />
+         </image>
+      </ImageView>
+      <Button id="white" layoutX="32.0" layoutY="370.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="251.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Book Invoice" AnchorPane.bottomAnchor="194.0" AnchorPane.topAnchor="370.0">
+         <font>
+            <Font name="Crimson Text Regular" size="15.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="41.0" layoutY="374.0">
+         <image>
+            <Image url="@Images/bookinvoicepng.png" />
+         </image>
+      </ImageView>
+      <Button id="white" fx:id="viewBooksButton" layoutX="32.0" layoutY="416.0" mnemonicParsing="false" onAction="#viewBooksButton" prefHeight="36.0" prefWidth="251.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="View Available Books" AnchorPane.bottomAnchor="148.0" AnchorPane.topAnchor="416.0">
+         <font>
+            <Font name="Crimson Text Regular" size="15.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="41.0" layoutY="421.0">
+         <image>
+            <Image url="@Images/books.png" />
+         </image>
+      </ImageView>
+      <Button id="white" layoutX="32.0" layoutY="462.0" mnemonicParsing="false" onAction="#UpdateInfoBook" prefHeight="36.0" prefWidth="251.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Update Information" AnchorPane.bottomAnchor="102.0" AnchorPane.topAnchor="462.0">
+         <font>
+            <Font name="Crimson Text Regular" size="15.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="36.0" fitWidth="37.0" layoutX="38.0" layoutY="462.0">
+         <image>
+            <Image url="@Images/update.png" />
+         </image>
+      </ImageView>
+      <Button id="white" layoutX="33.0" layoutY="508.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="251.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="View Transaction History" AnchorPane.bottomAnchor="56.0" AnchorPane.topAnchor="508.0">
+         <font>
+            <Font name="Crimson Text Regular" size="15.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="44.0" layoutY="512.0">
+         <image>
+            <Image url="@Images/view.png" />
+         </image>
+      </ImageView>
+      <Button id="white" layoutX="37.0" layoutY="555.0" mnemonicParsing="false" onAction="#userLogButton" prefHeight="36.0" prefWidth="251.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="UserLog" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="555.0">
+         <font>
+            <Font name="Crimson Text Regular" size="15.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="44.0" layoutY="560.0">
+         <image>
+            <Image url="@Images/userlog.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>
+
