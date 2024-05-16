@@ -1,14 +1,19 @@
-package com.example.bsis;
+package com.example.system4;
 
 import com.sun.javafx.application.PlatformImpl;
 import com.sun.tools.javac.Main;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,12 +22,17 @@ import java.net.URL;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.util.ResourceBundle;
 
 import java.util.logging.Logger;
 
-public class AddBooks implements Initializable {
+
+public class AddBook implements Initializable {
+
+    @FXML
+    private Label userIdLabel;
 
     @FXML
     private TextField BQuantity;
@@ -45,9 +55,6 @@ public class AddBooks implements Initializable {
     private TextField BSupplierPrice;
     @FXML
     private TextField BTitle;
-    //============================
-    @FXML
-    private Button Home;
     //============================
 
     @FXML
@@ -90,6 +97,10 @@ public class AddBooks implements Initializable {
     private TableView<ViewInvoiceInformation> InvoiceTable;
 
     private static final Logger logger = Logger.getLogger(Main.class.getName());
+
+    public void setUserData(String idstr) {
+        userIdLabel.setText(idstr);
+    }
 
     @FXML
     public String Status() {
@@ -251,7 +262,7 @@ public class AddBooks implements Initializable {
     public int getBookId() {
         String url = "jdbc:mysql://localhost:3306/addbookinvoice";
         String user = "root";
-        String password = "septembersapphire_07";
+        String password = "10141996";
         int maxId = 1000;
 
         String sql = "SELECT MAX(CAST(SUBSTRING_INDEX(`BOOK ID`, '-', -1) AS UNSIGNED)) FROM addbookinvoice.addbooksinfo";
@@ -274,7 +285,7 @@ public class AddBooks implements Initializable {
     @FXML
     private boolean validateFields(String formType) {
         if (formType.equals("new")) {
-           return BTitle.getText().isEmpty() ||
+            return BTitle.getText().isEmpty() ||
                     BAuthor.getText().isEmpty() || BSeriesNo.getText().isEmpty() ||
                     genreDrop.getValue() == null || BShelf.getText().isEmpty() ||
                     BPubDate.getText().isEmpty() || BIsbn.getText().isEmpty() ||
@@ -497,7 +508,7 @@ public class AddBooks implements Initializable {
                             int seriesNo, String shelf, double supplierPrice, String selectedinvoiceid, int bquantity) {
         String url = "jdbc:mysql://localhost:3306/addbookinvoice";
         String user = "root";
-        String password = "septembersapphire_07";
+        String password = "10141996";
 
         if (bookExists(title, author, genre, isbn, pubdate, sellingPrice, seriesNo, shelf, supplierPrice)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -546,7 +557,7 @@ public class AddBooks implements Initializable {
                                int seriesNo, String shelf, double supplierPrice) {
         String url = "jdbc:mysql://localhost:3306/addbookinvoice";
         String user = "root";
-        String password = "septembersapphire_07";
+        String password = "10141996";
 
         String sql = "SELECT COUNT(*) FROM addbookinvoice.addbooksinfo WHERE TITLE = ? AND AUTHOR = ? AND GENRE = ? AND ISBN = ? " +
                 "AND `PUB-DATE` = ? AND PRICE = ? AND `SERIES NO.` = ? AND SHELF = ? AND `SUP-PRICE` = ?";
@@ -578,6 +589,168 @@ public class AddBooks implements Initializable {
     public ObservableList<ViewInvoiceInformation> getData() {
         return InvoiceSQLConnector.getInvoiceData();
     }
+
+    public void adminInfo(ActionEvent event) {
+        String idstr = userIdLabel.getText();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInfo.fxml"));
+            Parent root = loader.load();
+
+            userInfo controller = loader.getController();
+
+            controller.setUserData(idstr);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error occurred during opening adminInfo " + e.getMessage());
+        }
+    }
+
+    @FXML
+    public void BackButtonDashboard(ActionEvent event) {
+        String idstr = userIdLabel.getText();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("adminHomePage.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller instance of adminHomePageController
+            adminHomePage controller = loader.getController();
+
+            // Pass user data back to adminHomePageController
+            controller.setUserData(idstr);
+
+            // Show the adminHomePage scene
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error loading adminHomePage.fxml: " + e.getMessage());
+        }
+    }
+
+    public void signUp(ActionEvent event) {
+        String idstr = userIdLabel.getText();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("adminSignUp.fxml"));
+            Parent root = loader.load();
+
+            adminSignUp controller = loader.getController();
+
+            controller.setUserData(idstr);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error occurred during opening adminSignUp " + e.getMessage());
+        }
+    }
+
+    public void userLogButton(ActionEvent event) {
+        String idstr = userIdLabel.getText();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("UserLog.fxml"));
+            Parent root = loader.load();
+
+            UserLog controller = loader.getController();
+
+            controller.setUserData(idstr);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error occurred during opening adminSubPage " + e.getMessage());
+        }
+    }
+
+    @FXML
+    public void viewBooksButton(ActionEvent event) {
+        String idstr = userIdLabel.getText();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewBooks.fxml"));
+            Parent root = loader.load();
+
+            ViewBooks controller = loader.getController();
+
+            controller.setUserData(idstr);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error occurred during opening adminSubPage " + e.getMessage());
+        }
+    }
+
+    @FXML
+    public void SuppliersButton(ActionEvent event) {
+        String idstr = userIdLabel.getText();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddSupplier.fxml"));
+            Parent root = loader.load();
+
+            AddSupplier controller = loader.getController();
+
+            controller.setUserData(idstr);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error occurred during opening adminSubPage " + e.getMessage());
+        }
+    }
+
+    @FXML
+    public void backToAddInvoice(ActionEvent event) {
+        String idstr = userIdLabel.getText();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddInvoice.fxml"));
+            Parent root = loader.load();
+
+            AddBooksInvoice controller = loader.getController();
+
+            controller.setUserData(idstr);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error occurred during opening adminSubPage " + e.getMessage());
+        }
+    }
+
+    @FXML
+    public void UpdateInfoBook(ActionEvent event) {
+        String idstr = userIdLabel.getText();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewUpdateBooksInfo.fxml"));
+            Parent root = loader.load();
+
+            ViewUpdateInfoBook controller = loader.getController();
+
+            controller.setUserData(idstr);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error occurred during opening adminSubPage " + e.getMessage());
+        }
+    }
+
+}
 
 
 }
