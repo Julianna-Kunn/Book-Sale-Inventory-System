@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.system4.userUpdate">
+   <children>
+      <Rectangle fx:id="rectangleDesign" arcHeight="5.0" arcWidth="5.0" fill="#d3e3fc" height="606.0" layoutX="-4.0" layoutY="-3.0" stroke="#00887a" strokeType="INSIDE" width="1007.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="424.0" layoutX="211.0" layoutY="109.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="633.0" />
+      <Label fx:id="userIdLabel" layoutX="215.0" layoutY="449.0" prefHeight="36.0" prefWidth="142.0" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Crimson Text Bold" size="20.0" />
+         </font>
+      </Label>
+      <Text fx:id="signUpText" fill="#00887a" layoutX="282.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UPDATE ACCOUNT INFO" wrappingWidth="541.150390625">
+         <font>
+            <Font name="PoetsenOne" size="45.0" />
+         </font>
+      </Text>
+      <TextField id="skyblue" fx:id="nameTextField" layoutX="354.0" layoutY="141.0" prefHeight="44.0" prefWidth="368.0" stylesheets="@../../../Stylesheet/stylesheet.css">
+         <font>
+            <Font name="Crimson Text Bold" size="19.0" />
+         </font>
+      </TextField>
+      <TextField id="skyblue" fx:id="emailTextField" layoutX="356.0" layoutY="208.0" prefHeight="40.0" prefWidth="368.0" stylesheets="@../../../Stylesheet/stylesheet.css">
+         <font>
+            <Font name="Crimson Text Bold" size="19.0" />
+         </font>
+      </TextField>
+      <TextField id="skyblue" fx:id="contactNumberTextField" layoutX="354.0" layoutY="272.0" prefHeight="42.0" prefWidth="368.0" stylesheets="@../../../Stylesheet/stylesheet.css">
+         <font>
+            <Font name="Crimson Text Bold" size="19.0" />
+         </font>
+      </TextField>
+      <PasswordField id="skyblue" fx:id="passwordPasswordField" layoutX="356.0" layoutY="341.0" prefHeight="44.0" prefWidth="368.0" stylesheets="@../../../Stylesheet/stylesheet.css">
+         <font>
+            <Font name="Crimson Text Bold" size="19.0" />
+         </font>
+      </PasswordField>
+      <PasswordField id="skyblue" fx:id="confiPasswordPasswordField" layoutX="357.0" layoutY="409.0" prefHeight="40.0" prefWidth="368.0" stylesheets="@../../../Stylesheet/stylesheet.css">
+         <font>
+            <Font name="Crimson Text Bold" size="19.0" />
+         </font>
+      </PasswordField>
+      <Button id="skyblue" fx:id="signUpButton" layoutX="463.0" layoutY="477.0" mnemonicParsing="false" onAction="#UserUpdate" prefHeight="36.0" prefWidth="150.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Save">
+         <font>
+            <Font name="Crimson Text Regular" size="19.0" />
+         </font>
+      </Button>
+      <Label fx:id="dateLabel" layoutX="211.0" layoutY="501.0" prefHeight="30.0" prefWidth="196.0" textAlignment="CENTER">
+         <font>
+            <Font name="Crimson Text Regular" size="15.0" />
+         </font>
+      </Label>
+      <Button id="glass" fx:id="backSignUp" layoutX="771.0" layoutY="506.0" mnemonicParsing="false" onAction="#Home" prefHeight="38.0" prefWidth="163.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Back to Dashboard">
+         <font>
+            <Font name="Crimson Text Regular" size="18.0" />
+         </font>
+      </Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="41.0" layoutX="-1.0" layoutY="-6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1003.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="41.0" layoutX="-2.0" layoutY="564.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1006.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="557.0" layoutX="957.0" layoutY="28.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="48.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="545.0" layoutY="34.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="43.0" />
+      <ImageView fitHeight="39.0" fitWidth="43.0" layoutX="299.0" layoutY="144.0">
+         <image>
+            <Image url="@Images/user_.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="35.0" fitWidth="36.0" layoutX="303.0" layoutY="211.0">
+         <image>
+            <Image url="@Images/email_.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="34.0" fitWidth="33.0" layoutX="305.0" layoutY="276.0">
+         <image>
+            <Image url="@Images/phone_.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="42.0" fitWidth="43.0" layoutX="300.0" layoutY="342.0">
+         <image>
+            <Image url="@Images/lock-password-bold_.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
