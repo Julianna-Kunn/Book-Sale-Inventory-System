@@ -1,0 +1,19 @@
+.transparent-border-table {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.transparent-border-table .column-header-background {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.transparent-border-table .table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: black; /* Set text color to black */
+}
+
+.transparent-border-table .table-cell {
+    -fx-text-fill: black; /* Set text color to black */
+}
