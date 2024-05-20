@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="926.0" prefWidth="600.0" styleClass="shadow" stylesheets="@../../../Stylesheet/dashboardDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.system4.customerReceipt">
+   <children>
+      <Pane layoutY="-14.0" prefHeight="926.0" prefWidth="600.0">
+         <children>
+            <TableView layoutX="5.0" layoutY="270.0" prefHeight="466.0" prefWidth="583.0" styleClass="transparent-border-table" stylesheets="@../../../Stylesheet/stylesheet.css">
+              <columns>
+                <TableColumn prefWidth="75.0" />
+                <TableColumn prefWidth="241.0" />
+                  <TableColumn prefWidth="71.0" />
+                  <TableColumn prefWidth="191.0" />
+              </columns>
+            </TableView>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="225.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/BOOKSALE.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="171.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOKSALE - SM CEBU CITY" wrappingWidth="257.767578125">
+               <font>
+                  <Font name="Consolas" size="20.0" />
+               </font>
+            </Text>
+            <Text layoutX="156.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation Area, Cebu Port Center, Mabolo, Cebu City" textAlignment="CENTER" wrappingWidth="287.767578125">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="165.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TIN: 000-0000-0000" textAlignment="CENTER" wrappingWidth="287.767578125">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="228.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+639915874142" textAlignment="CENTER" wrappingWidth="161.767578125">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="391.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer ID: " textAlignment="CENTER" wrappingWidth="123.767578125">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="-4.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" wrappingWidth="608.0">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="-8.0" layoutY="748.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" wrappingWidth="608.0">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="444.0" layoutY="770.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:" textAlignment="CENTER" wrappingWidth="99.767578125">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Label layoutX="521.0" layoutY="756.0" text="\$0.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Text layoutX="444.0" layoutY="791.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount:" textAlignment="CENTER" wrappingWidth="99.767578125" x="-3.0">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Label layoutX="521.0" layoutY="776.0" text="\$0.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Text layoutX="444.0" layoutY="811.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Change:" textAlignment="CENTER" wrappingWidth="99.767578125" x="-3.0">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Label layoutX="518.0" layoutY="796.0" text="\$0.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Text layoutX="-4.0" layoutY="828.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" wrappingWidth="608.0">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="14.0" layoutY="770.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" textAlignment="CENTER" wrappingWidth="99.767578125">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="14.0" layoutY="806.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time:" textAlignment="CENTER" wrappingWidth="99.767578125">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="156.0" layoutY="875.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THANK YOU COME AGAIN!" textAlignment="CENTER" wrappingWidth="287.767578125">
+               <font>
+                  <Font name="Consolas Bold" size="23.0" />
+               </font>
+            </Text>
+            <Text layoutX="14.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book ID" wrappingWidth="64.767578125">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="177.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" wrappingWidth="64.767578125">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="309.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity" wrappingWidth="72.0">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="465.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Price" wrappingWidth="99.767578125">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" wrappingWidth="619.0">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Text>
+            <Label fx:id="userIdLabel" layoutX="499.0" layoutY="232.0" prefHeight="36.0" prefWidth="87.0" textAlignment="CENTER">
+               <font>
+                  <Font name="Crimson Text Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
