@@ -1,0 +1,545 @@
+import java.io.IOException;
+import java.sql.*;
+
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.collections.ObservableList;
+import javafx.stage.Stage;
+
+import java.util.logging.Logger;
+
+import javafx.scene.control.Alert.AlertType;
+
+public class CustomerPurchaseBooks {
+    private static final Logger logger = Logger.getLogger(ViewBooks.class.getName());
+
+    @FXML
+    private Label userIdLabel;
+
+    @FXML
+    private TableView<ViewBookInformation> ViewTableM;
+
+    @FXML
+    private TableColumn<ViewBookInformation, String> VBookID_col;
+
+    @FXML
+    private TableColumn<ViewBookInformation, String> VBookTitle_col;
+
+    @FXML
+    private TableColumn<ViewBookInformation, String> VBookAuthor_col;
+
+    @FXML
+    private TableColumn<ViewBookInformation, Integer> VBseries_col;
+
+    @FXML
+    private TableColumn<ViewBookInformation, String> VGenre_col;
+
+    @FXML
+    private TableColumn<ViewBookInformation, String> VISBN_col;
+
+    @FXML
+    private TableColumn<ViewBookInformation, Double> VPrice_col;
+
+    @FXML
+    private TableColumn<ViewBookInformation, String> VStatus_col;
+
+    @FXML
+    private TableColumn<ViewBookInformation, Integer> VPubDate_col;
+
+    @FXML
+    private TableColumn<ViewBookInformation, String> VShelf_col;
+
+    @FXML
+    private TableColumn<ViewBookInformation, Double> VSupplierPrice_col;
+
+
+    @FXML
+    private TableColumn<ViewBookInformation, Integer> VQuantity_col;
+
+    @FXML
+    private TableColumn<ViewBookInformation, String> VInvoiceId_col;
+
+    @FXML
+    private TableColumn<ViewBookInformation, String> VTimestamp_col;
+
+    @FXML
+    private ComboBox<String> bookIdComboBox;
+
+    @FXML
+    private ComboBox<String> bookTitleComboBox;
+
+    @FXML
+    private Spinner<Integer> quantitySpinner;
+
+    @FXML
+    private Label bookIdLabel;
+
+    @FXML
+    private Label bookTitleLabel;
+
+    @FXML
+    private Label authorLabel;
+
+    @FXML
+    private Label genreLabel;
+
+    @FXML
+    private Label pubDateLabel;
+
+    @FXML
+    private Label priceLabel;
+
+    @FXML
+    private Label totalLabel;
+
+    private double selectedBookPrice;
+
+    private Stage boughtBooksStage;
+    private BoughtBooksInfo boughtBooksController;
+
+    public void setUserData(String idstr) { userIdLabel.setText(idstr);
+    }
+
+    @FXML
+    public void initialize() {
+        VBookID_col.setCellValueFactory(new PropertyValueFactory<>("bookId"));
+        VBookTitle_col.setCellValueFactory(new PropertyValueFactory<>("title"));
+        VBookAuthor_col.setCellValueFactory(new PropertyValueFactory<>("author"));
+        VBseries_col.setCellValueFactory(new PropertyValueFactory<>("seriesNo"));
+        VGenre_col.setCellValueFactory(new PropertyValueFactory<>("genre"));
+        VISBN_col.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+        VPrice_col.setCellValueFactory(new PropertyValueFactory<>("sellingPrice"));
+        VStatus_col.setCellValueFactory(new PropertyValueFactory<>("status"));
+        VPubDate_col.setCellValueFactory(new PropertyValueFactory<>("pubdate"));
+        VShelf_col.setCellValueFactory(new PropertyValueFactory<>("shelf"));
+        VQuantity_col.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        VSupplierPrice_col.setCellValueFactory(new PropertyValueFactory<>("supplierPrice"));
+        VInvoiceId_col.setCellValueFactory(new PropertyValueFactory<>("invoiceid"));
+        VTimestamp_col.setCellValueFactory(new PropertyValueFactory<>("timestamp"));
+
+        loadDataFromDatabase();
+        ObservableList<ViewBookInformation> data = SQLConnector.getDatausers();
+        ViewTableM.setItems(data);
+        ViewTableM.refresh();
+
+        // Populate ComboBoxes
+        loadComboBoxData();
+
+        bookIdComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                updateBookTitleComboBox(newValue);
+            }
+        });
+
+        bookTitleComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                updateBookIdComboBox(newValue);
+            }
+        });
+
+        initializeQuantitySpinner();
+    }
+
+    private void initializeQuantitySpinner() {
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0);
+        quantitySpinner.setValueFactory(valueFactory);
+        quantitySpinner.valueProperty().addListener((obs, oldValue, newValue) -> updateTotalLabel());
+    }
+
+    private void loadComboBoxData() {
+        String url = "jdbc:mysql://localhost:3306/addbookinvoice";
+        String user = "root";
+        String password = "10141996";
+        String sql = "SELECT `BOOK ID`, `TITLE` FROM addbookinvoice.addbooksinfo";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            ObservableList<String> bookIds = FXCollections.observableArrayList();
+            ObservableList<String> bookTitles = FXCollections.observableArrayList();
+
+            while (rs.next()) {
+                bookIds.add(rs.getString("BOOK ID"));
+                bookTitles.add(rs.getString("TITLE"));
+            }
+
+            bookIdComboBox.setItems(bookIds);
+            bookTitleComboBox.setItems(bookTitles);
+
+        } catch (SQLException e) {
+            logger.severe("Error loading comboBox data: " + e.getMessage());
+        }
+    }
+
+    private void updateBookDetails(String query, String parameter) {
+        String url = "jdbc:mysql://localhost:3306/addbookinvoice";
+        String user = "root";
+        String password = "10141996";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, parameter);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                bookIdLabel.setText(rs.getString("BOOK ID"));
+                bookTitleLabel.setText(rs.getString("TITLE"));
+                authorLabel.setText(rs.getString("AUTHOR"));
+                genreLabel.setText(rs.getString("GENRE"));
+                pubDateLabel.setText(rs.getString("PUB-DATE"));
+                priceLabel.setText(String.valueOf(rs.getDouble("PRICE")));
+            }
+        } catch (SQLException e) {
+            logger.severe("Error updating book details: " + e.getMessage());
+        }
+    }
+
+    private void updateTotalLabel() {
+        int quantity = quantitySpinner.getValue();
+        double total = quantity * selectedBookPrice;
+        totalLabel.setText("$" + total);
+    }
+
+    @FXML
+    private void handleBookIdSelection(ActionEvent event) {
+        String selectedBookId = bookIdComboBox.getValue();
+        if (selectedBookId != null) {
+            String query = "SELECT * FROM addbookinvoice.addbooksinfo WHERE `BOOK ID` = ?";
+            updateBookDetails(query, selectedBookId);
+            updateBookTitleComboBox(selectedBookId);
+            selectedBookPrice = getBookPrice(selectedBookId);
+            updateTotalLabel();
+        }
+    }
+
+    @FXML
+    private void handleBookTitleSelection(ActionEvent event) {
+        String selectedBookTitle = bookTitleComboBox.getValue();
+        if (selectedBookTitle != null) {
+            String query = "SELECT * FROM addbookinvoice.addbooksinfo WHERE `TITLE` = ?";
+            updateBookDetails(query, selectedBookTitle);
+            updateBookIdComboBox(selectedBookTitle);
+            selectedBookPrice = getBookPrice(getBookIdByTitle(selectedBookTitle));
+            updateTotalLabel();
+        }
+    }
+
+    private double getBookPrice(String bookId) {
+        String url = "jdbc:mysql://localhost:3306/addbookinvoice";
+        String user = "root";
+        String password = "10141996";
+        String sql = "SELECT `PRICE` FROM addbookinvoice.addbooksinfo WHERE `BOOK ID` = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, bookId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getDouble("PRICE");
+            }
+        } catch (SQLException e) {
+            logger.severe("Error fetching book price: " + e.getMessage());
+        }
+        return 0.0;
+    }
+
+    private String getBookIdByTitle(String title) {
+        String url = "jdbc:mysql://localhost:3306/addbookinvoice";
+        String user = "root";
+        String password = "10141996";
+        String sql = "SELECT `BOOK ID` FROM addbookinvoice.addbooksinfo WHERE `TITLE` = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, title);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("BOOK ID");
+            }
+        } catch (SQLException e) {
+            logger.severe("Error fetching book ID by title: " + e.getMessage());
+        }
+        return null;
+    }
+
+    private void updateBookTitleComboBox(String bookId) {
+        String url = "jdbc:mysql://localhost:3306/addbookinvoice";
+        String user = "root";
+        String password = "10141996";
+        String sql = "SELECT `TITLE` FROM addbookinvoice.addbooksinfo WHERE `BOOK ID` = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, bookId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                bookTitleComboBox.setValue(rs.getString("TITLE"));
+            }
+        } catch (SQLException e) {
+            logger.severe("Error updating book title ComboBox: " + e.getMessage());
+        }
+    }
+
+    private void updateBookIdComboBox(String bookTitle) {
+        String url = "jdbc:mysql://localhost:3306/addbookinvoice";
+        String user = "root";
+        String password = "10141996";
+        String sql = "SELECT `BOOK ID` FROM addbookinvoice.addbooksinfo WHERE `TITLE` = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, bookTitle);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                bookIdComboBox.setValue(rs.getString("BOOK ID"));
+            }
+        } catch (SQLException e) {
+            logger.severe("Error updating book ID ComboBox: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleTableClick() {
+        ViewBookInformation selectedBook = ViewTableM.getSelectionModel().getSelectedItem();
+        if (selectedBook != null) {
+            bookIdLabel.setText("" + selectedBook.getBookId());
+            bookTitleLabel.setText("" + selectedBook.getTitle());
+            authorLabel.setText("" + selectedBook.getAuthor());
+            genreLabel.setText("" + selectedBook.getGenre());
+            pubDateLabel.setText("" + selectedBook.getPubdate());
+            priceLabel.setText("" + selectedBook.getSellingPrice());
+            selectedBookPrice = selectedBook.getSellingPrice();
+            updateTotalLabel();
+
+            bookIdComboBox.setValue(selectedBook.getBookId());
+            bookTitleComboBox.setValue(selectedBook.getTitle());
+        }
+    }
+
+    @FXML
+    private void loadDataFromDatabase() {
+        String url = "jdbc:mysql://localhost:3306/addbookinvoice";
+        String user = "root";
+        String password = "10141996";
+
+        String sql ="SELECT `BOOK ID`, `TITLE`, `AUTHOR`, `SERIES NO.`, `GENRE`, `SHELF`, `PUB-DATE`, `ISBN`, `STATUS`, `PRICE`, `QUANTITY`, `SUP-PRICE`, `INVOICE ID`, `TIMESTAMP` FROM addbookinvoice.addbooksinfo";
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            ViewTableM.getItems().clear();
+
+            // Iterate through the ResultSet and populate the TableView
+            while (rs.next()) {
+                ViewBookInformation data = new ViewBookInformation(
+                        rs.getString("BOOK ID"),
+                        rs.getString("TITLE"),
+                        rs.getString("AUTHOR"),
+                        rs.getString("GENRE"),
+                        rs.getString("STATUS"),
+                        rs.getString("ISBN"),
+                        rs.getInt("PUB-DATE"),
+                        rs.getDouble("PRICE"),
+                        rs.getInt("SERIES NO."),
+                        rs.getString("SHELF"),
+                        rs.getInt("QUANTITY"),
+                        rs.getDouble("SUP-PRICE"),
+                        rs.getString("INVOICE ID"),
+                        rs.getString("TIMESTAMP")
+                );
+                ViewTableM.getItems().add(data);
+            }
+
+        } catch (SQLException e) {
+            logger.severe("Error loading MainInterface.fxml: " + e.getMessage());
+        }
+    }
+
+    private int checkAvailableStock(String bookId) {
+        String url = "jdbc:mysql://localhost:3306/addbookinvoice";
+        String user = "root";
+        String password = "10141996";
+        String sql = "SELECT `QUANTITY` FROM addbookinvoice.addbooksinfo WHERE `BOOK ID` = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, bookId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("QUANTITY");
+            }
+        } catch (SQLException e) {
+            logger.severe("Error checking available stock: " + e.getMessage());
+        }
+        return 0;
+    }
+
+
+
+    @FXML
+    private void handlePurchase(ActionEvent event) {
+        String selectedBookId = bookIdComboBox.getValue();
+        String selectedBookTitle = bookTitleComboBox.getValue();
+        int selectedQuantity = quantitySpinner.getValue();
+        double selectedBookPrice = getSelectedBookPrice(selectedBookId);
+        String selectedBookAuthor = getSelectedBookAuthor(selectedBookId);
+
+        if (selectedBookId == null || selectedBookTitle == null || selectedBookAuthor == null) {
+            showAlert("Error", "Please select a book ID, title, and author.");
+            return;
+        }
+
+        int availableStock = checkAvailableStock(selectedBookId);
+
+        if (availableStock == 0) {
+            showAlert("Out of Stock", "The selected book is out of stock.");
+            return;
+        }
+
+        if (selectedQuantity > availableStock) {
+            showAlert("Out of Stock", "The requested quantity exceeds available stock. Available stock: " + availableStock);
+            return;
+        }
+
+        try {
+            if (boughtBooksStage == null) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("BoughtBooksInfo.fxml"));
+                Parent root = fxmlLoader.load();
+
+                boughtBooksController = fxmlLoader.getController();
+                boughtBooksController.addBook(selectedBookId, selectedBookTitle, selectedBookAuthor, selectedQuantity, selectedBookPrice);
+                boughtBooksController.getdata(selectedBookId, selectedBookTitle, selectedQuantity, selectedBookPrice, userIdLabel.getText());
+                boughtBooksStage = new Stage();
+                boughtBooksStage.setScene(new Scene(root));
+                boughtBooksStage.show();
+                boughtBooksStage.setResizable(false);
+
+                boughtBooksStage.setOnCloseRequest(e -> boughtBooksStage = null);
+            } else {
+                boughtBooksController.addBook(selectedBookId, selectedBookTitle, selectedBookAuthor, selectedQuantity, selectedBookPrice);
+                boughtBooksStage.requestFocus();
+            }
+        } catch (IOException e) {
+            System.out.println("Can't load new window: " + e.getMessage());
+        }
+    }
+
+    private String getSelectedBookAuthor(String bookId) {
+        String url = "jdbc:mysql://localhost:3306/addbookinvoice";
+        String user = "root";
+        String password = "10141996";
+        String sql = "SELECT `AUTHOR` FROM addbookinvoice.addbooksinfo WHERE `BOOK ID` = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, bookId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("AUTHOR");
+            }
+        } catch (SQLException e) {
+            logger.severe("Error fetching book author: " + e.getMessage());
+        }
+        return null;
+    }
+
+
+    private double getSelectedBookPrice(String bookId) {
+        String url = "jdbc:mysql://localhost:3306/addbookinvoice";
+        String user = "root";
+        String password = "10141996";
+        String sql = "SELECT `PRICE` FROM addbookinvoice.addbooksinfo WHERE `BOOK ID` = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, bookId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getDouble("PRICE");
+            }
+        } catch (SQLException e) {
+            logger.severe("Error fetching book price: " + e.getMessage());
+        }
+        return 0.0;
+    }
+
+    @FXML
+    private void handleCancel(ActionEvent event) {
+        bookIdComboBox.setValue(null);
+        bookTitleComboBox.setValue(null);
+        quantitySpinner.getValueFactory().setValue(0);
+
+        // Clear the labels
+        bookIdLabel.setText("");
+        bookTitleLabel.setText("");
+        authorLabel.setText("");
+        genreLabel.setText("");
+        pubDateLabel.setText("");
+        priceLabel.setText("");
+
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    public void adminInfo(ActionEvent event) {
+        String idstr = userIdLabel.getText();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userInfo.fxml"));
+            Parent root = loader.load();
+
+            userInfo controller = loader.getController();
+            controller.setUserData(idstr);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error occurred during opening adminSubPage " + e.getMessage());
+        }
+    }
+
+    @FXML
+    public void BackButtonDashboard(ActionEvent event) {
+        String idstr = userIdLabel.getText();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("customerHomePage.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller instance of adminHomePageController
+            customerHomePage controller = loader.getController();
+
+            // Pass user data back to adminHomePageController
+            controller.setUserData(idstr);
+
+            // Show the adminHomePage scene
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            logger.severe("Error loading adminHomePage.fxml: " + e.getMessage());
+        }
+    }
+
+}
