@@ -1,0 +1,282 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Logger;
+
+public class BoughtBooksInfo {
+
+    @FXML
+    private TableView<Book> boughtBooksTableView;
+    @FXML
+    private TableColumn<Book, String> bookIdColumn;
+    @FXML
+    private TableColumn<Book, String> titleColumn;
+    @FXML
+    private TableColumn<Book, String> authorColumn;
+    @FXML
+    private TableColumn<Book, Integer> quantityColumn;
+    @FXML
+    private TableColumn<Book, Double> priceColumn;
+
+    @FXML
+    private Label totalPriceLabel;
+    @FXML
+    private TextField amountTextField;
+    @FXML
+    private Label changeLabel;
+
+    @FXML
+    private Label userIdLabel;
+
+    private Stage boughtBooksStage;
+
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
+
+    public void setUserData(String idstr) {
+        userIdLabel.setText(idstr);
+    }
+
+    private final ObservableList<Book> boughtBooks = FXCollections.observableArrayList();
+    private int lastNotifiedDiscount = 0;
+
+    @FXML
+    public void initialize() {
+        bookIdColumn.setCellValueFactory(new PropertyValueFactory<>("bookId"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        boughtBooksTableView.setItems(boughtBooks);
+        amountTextField.textProperty().addListener((observable, oldValue, newValue) -> updateChange());
+    }
+
+    public void addBook(String bookId, String title, String author, int quantity, double price) {
+        Book book = new Book(bookId, title, author, quantity, price);
+        boughtBooks.add(book);
+        updateTotalPrice();
+    }
+
+    @FXML
+    private void handleCancel(ActionEvent event) {
+        boughtBooks.clear();
+        boughtBooksTableView.setItems(boughtBooks);
+        updateTotalPrice();
+        amountTextField.clear();
+        changeLabel.setText("$0.0");
+        lastNotifiedDiscount = 0;
+    }
+
+    @FXML
+    private void handleRemove(ActionEvent event) {
+        Book selectedBook = boughtBooksTableView.getSelectionModel().getSelectedItem();
+        if (selectedBook != null) {
+            boughtBooks.remove(selectedBook);
+            updateTotalPrice();
+        }
+    }
+
+    private void updateTotalPrice() {
+        double totalPrice = 0.0;
+        int totalQuantity = 0;
+        for (Book book : boughtBooks) {
+            totalPrice += book.getQuantity() * book.getPrice();
+            totalQuantity += book.getQuantity();
+        }
+
+        double discount = getDiscount(totalQuantity);
+        double discountedPrice = totalPrice * (1 - discount);
+
+        totalPriceLabel.setText(String.format("$%.2f", discountedPrice));
+        notifyDiscount(totalQuantity, discount);
+        updateChange();
+    }
+
+    private double getDiscount(int totalQuantity) {
+        if (totalQuantity >= 50) {
+            return 0.50;
+        } else if (totalQuantity >= 40) {
+            return 0.40;
+        } else if (totalQuantity >= 30) {
+            return 0.30;
+        } else if (totalQuantity >= 20) {
+            return 0.20;
+        } else if (totalQuantity >= 10) {
+            return 0.10;
+        } else {
+            return 0.0;
+        }
+    }
+
+    private void notifyDiscount(int totalQuantity, double discount) {
+        int discountPercent = (int) (discount * 100);
+        if (discountPercent > lastNotifiedDiscount) {
+            lastNotifiedDiscount = discountPercent;
+            if (discountPercent > 0) {
+                showAlert(Alert.AlertType.INFORMATION, "Discount Applied", "You have received a " + discountPercent + "% discount for purchasing " + totalQuantity + " books.");
+            }
+        }
+    }
+
+    private void updateChange() {
+        double totalPrice = Double.parseDouble(totalPriceLabel.getText().replace("$", ""));
+        String amountText = amountTextField.getText();
+        if (!amountText.isEmpty()) {
+            try {
+                double amount = Double.parseDouble(amountText);
+                if (amount >= totalPrice) {
+                    double change = amount - totalPrice;
+                    changeLabel.setText(String.format("$%.2f", change));
+                } else {
+                    changeLabel.setText("$0.0");
+                }
+            } catch (NumberFormatException e) {
+                showAlert(Alert.AlertType.ERROR, "Invalid Input", "Please enter a valid amount.");
+            }
+        } else {
+            changeLabel.setText("$0.0");
+        }
+    }
+
+    public static Connection ConnectDb() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/buybooks_customer";
+            String user = "root";
+            String password = "10141996";
+            Connection conn = DriverManager.getConnection(url, user, password);
+            Alert connectionstatus = new Alert(Alert.AlertType.INFORMATION);
+            connectionstatus.setTitle("CONNECTION STATUS");
+            connectionstatus.setHeaderText(null);
+            connectionstatus.setContentText("CONNECTION ESTABLISHED");
+            connectionstatus.showAndWait();
+            return conn;
+        } catch (Exception e) {
+            Alert connectionstatus = new Alert(Alert.AlertType.ERROR);
+            connectionstatus.setTitle("CONNECTION STATUS");
+            connectionstatus.setHeaderText(null);
+            connectionstatus.setContentText("CONNECTION FAILED");
+            connectionstatus.showAndWait();
+            return null;
+        }
+    }
+
+    private String bookid, title;
+
+    private String userid;
+    private int quantity;
+    private Double price;
+
+    public void getdata(String bookid, String title, int quantity, double price, String userid){
+        this.quantity = quantity;
+        this.bookid = bookid;
+        this.title = title;
+        this.price = price;
+        this.userid=userid;
+    }
+    @FXML
+    public void handlePay(ActionEvent event) {
+
+        try (Connection conn = ConnectDb()){
+
+            String query = "INSERT INTO buybooks_customer (IDBOOK, TITLE, QUANTITY, TOTALPRICE) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, bookid);
+            statement.setString(2, title);
+            statement.setInt(3, quantity);
+            statement.setDouble(4, price);
+            statement.executeUpdate();
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        String idstr = userid;
+        try {
+            if(boughtBooksStage == null){
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("receipt.fxml"));
+                Parent root = loader.load();
+
+                customerReceipt controller = loader.getController();
+
+                controller.setUserData(idstr);
+
+                boughtBooksStage = new Stage();
+                boughtBooksStage.setScene(new Scene(root));
+                boughtBooksStage.show();
+                boughtBooksStage.setResizable(false);
+
+                boughtBooksStage.setOnCloseRequest(e -> boughtBooksStage = null);
+            }else{
+                boughtBooksStage.requestFocus();
+
+            }
+
+        } catch (IOException e) {
+            logger.severe("Can't load new window: " + e.getMessage());
+        }
+
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    public static class Book {
+        private final String bookId;
+        private final String title;
+        private final String author;
+        private final int quantity;
+        private final double price;
+
+        public Book(String bookId, String title, String author, int quantity, double price) {
+            this.bookId = bookId;
+            this.title = title;
+            this.author = author;
+            this.quantity = quantity;
+            this.price = price;
+        }
+
+        public String getBookId() {
+            return bookId;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+    }
+}
