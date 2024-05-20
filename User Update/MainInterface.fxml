@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="MainInterfaceAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.system4.MainInterface">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="570.0" layoutX="308.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="692.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="542.0" layoutX="993.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="7.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="542.0" layoutX="307.0" layoutY="29.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="7.0" />
+      <AnchorPane layoutX="313.0" layoutY="46.0" prefHeight="520.0" prefWidth="682.0" style="-fx-background-color: #d3e3fc;" styleClass="sign-out" stylesheets="@../../../Stylesheet/dashboardDesign.css" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="313.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="46.0">
+         <children>
+            <ImageView fx:id="buyBookImage" fitHeight="54.0" fitWidth="69.0" layoutX="78.0" layoutY="381.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/74171.png" />
+               </image>
+            </ImageView>
+            <Button id="skyblue" fx:id="titleButton111" layoutX="59.0" layoutY="452.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="91.0" style="-fx-background-color: #77A6F7;" stylesheets="@../../../Stylesheet/stylesheet.css" text="BUY BOOK">
+               <font>
+                  <Font name="Crimson Text Regular" size="14.0" />
+               </font>
+            </Button>
+            <TableView fx:id="BookSearch" layoutX="39.0" layoutY="167.0" prefHeight="200.0" prefWidth="605.0">
+              <columns>
+                <TableColumn fx:id="bookIDColumn" prefWidth="75.0" text="Book ID" />
+                <TableColumn fx:id="bookTitleColumn" prefWidth="75.0" text="Title" />
+                  <TableColumn fx:id="bookAuthorColumn" prefWidth="75.0" text="Author" />
+                  <TableColumn fx:id="bookSeriesColumn" prefWidth="75.0" text="Series No." />
+                  <TableColumn fx:id="bookGenreColumn" prefWidth="75.0" text="Genre" />
+                  <TableColumn fx:id="bookShelfColumn" prefWidth="75.0" text="Shelf" />
+                  <TableColumn fx:id="bookStatusColumn" prefWidth="75.0" text="Status" />
+                  <TableColumn fx:id="bookPriceColumn" prefWidth="75.0" text="Price" />
+              </columns>
+            </TableView>
+         </children></AnchorPane>
+      <Button id="glass" fx:id="logInButton" layoutX="883.0" layoutY="508.0" mnemonicParsing="false" onAction="#logInButton" prefHeight="36.0" prefWidth="78.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="LOG-IN">
+         <font>
+            <Font name="Crimson Text Regular" size="12.0" />
+         </font></Button>
+      <Text fx:id="BookSalesText" fill="#00887a" layoutX="384.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOKSALES - SM CEBU CITY">
+         <font>
+            <Font name="PoetsenOne" size="45.0" />
+         </font>
+      </Text>
+      <Button id="glass" fx:id="signUpButton" layoutX="784.0" layoutY="509.0" mnemonicParsing="false" onAction="#signUpButton" prefHeight="36.0" prefWidth="78.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="SIGN-UP">
+         <font>
+            <Font name="Crimson Text Regular" size="12.0" />
+         </font></Button>
+      <ImageView fx:id="bookDesign1" fitHeight="314.0" fitWidth="309.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/book%20shelf.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bookDesign2" fitHeight="316.0" fitWidth="309.0" layoutY="297.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/book%20shelf.jpg" />
+         </image>
+      </ImageView>
+      <Rectangle fx:id="rectangleDesing2" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="220.0" layoutX="40.0" layoutY="198.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" width="229.0" />
+      <TextField id="white" fx:id="SearchBook" layoutX="473.0" layoutY="145.0" prefHeight="36.0" prefWidth="386.0" promptText="Search by Title, Author, Genre" stylesheets="@../../../Stylesheet/stylesheet.css">
+         <font>
+            <Font name="Crimson Text Regular" size="15.0" />
+         </font>
+      </TextField>
+      <ImageView fx:id="searchImages" fitHeight="47.0" fitWidth="39.0" layoutX="430.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/images-removebg-preview.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="36.0" layoutX="307.0" layoutY="568.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="693.0" />
+      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="55.0" layoutY="208.0">
+         <image>
+            <Image url="@Images/BOOKSALE.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
