@@ -1,0 +1,109 @@
+package com.example.system4;
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
+public class SupplierSQLConnector {
+
+    Connection connect = null;
+
+    public static Connection ConnectDb() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/booksales";
+            DatabaseInformation data = new DatabaseInformation();
+            Connection conn = DriverManager.getConnection(url, data.user, data.password);
+            Alert connectionstatus = new Alert(Alert.AlertType.INFORMATION);
+            connectionstatus.setTitle("CONNECTION STATUS");
+            connectionstatus.setHeaderText(null);
+            connectionstatus.setContentText("CONNECTION ESTABLISHED");
+            connectionstatus.showAndWait();
+            return conn;
+        } catch (Exception e) {
+            Alert connectionstatus = new Alert(Alert.AlertType.ERROR);
+            connectionstatus.setTitle("CONNECTION STATUS");
+            connectionstatus.setHeaderText(null);
+            connectionstatus.setContentText("CONNECTION FAILED");
+            connectionstatus.showAndWait();
+            return null;
+        }
+    }
+
+    public static ObservableList<ViewSupplierInformation> getDataUsers() {
+        Connection connect = ConnectDb();
+        ObservableList<ViewSupplierInformation> infoList = FXCollections.observableArrayList();
+        String sql = "SELECT `supplier_id`, `company name`, `representative name`, `Birthdate`, `contact number`, `TimeStamp`, `Re-order point` FROM booksales.add_supplier";
+
+        try (PreparedStatement pstmt = connect.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery();) {
+
+            while (rs.next()) {
+                infoList.add(new ViewSupplierInformation(
+                        rs.getString("supplier_id"),
+                        rs.getString("supplier name"),
+                        rs.getString("Birthdate"),
+                        rs.getString("TimeStamp"),
+                        rs.getString("company name"),
+                        rs.getString("contact number"),
+                        rs.getInt("Re-order point")
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return infoList;
+    }
+
+    static ObservableList<ViewSupplierInformation> getData() {
+        return SupplierSQLConnector.getDataUsers();
+    }
+
+    public static void updateData(ViewSupplierInformation selectedItem) {
+        String sql = "UPDATE booksales.add_supplier SET `company name` = ?, `representative name` = ?, `Birthdate` = ?, `contact number` = ?, `TimeStamp` = ?, `Re-order point` = ? WHERE `supplier_id` = ?";
+
+        try (Connection connect = ConnectDb();
+             PreparedStatement pstmt = connect.prepareStatement(sql)) {
+
+            // Set the values for the placeholders
+            pstmt.setString(1, selectedItem.getCompanyName());
+            pstmt.setString(2, selectedItem.getSupplierName());
+            pstmt.setString(3, selectedItem.getBirthdate());
+            pstmt.setString(4, selectedItem.getContactnum());
+            pstmt.setString(5, selectedItem.getTimestamp());
+            pstmt.setInt(6, selectedItem.getreorderpoint());
+            pstmt.setString(7, selectedItem.getSupplierID());// Set the supplier_id as the last parameter
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            Alert alert;
+            if (rowsAffected > 0) {
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Update Success");
+                alert.setHeaderText(null);
+                alert.setContentText("Data updated successfully!");
+            } else {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Update Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Failed to update data. Please try again.");
+            }
+            alert.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Update Error");
+            errorAlert.setHeaderText(null);
+            errorAlert.setContentText("An error occurred while updating data. Please try again.");
+            errorAlert.showAndWait();
+        }
+    }
+
+
+}
