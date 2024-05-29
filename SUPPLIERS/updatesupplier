@@ -1,0 +1,308 @@
+package com.example.system4;
+
+import com.mysql.cj.protocol.Resultset;
+import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.io.IOException;
+import java.sql.*;
+
+import javafx.collections.ObservableList;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+
+import java.sql.ResultSet;
+
+
+import java.sql.Connection;
+import java.util.logging.Logger;
+
+
+    public class UpdateSupplier {
+        public static final Logger logger = Logger.getLogger(ViewBooks.class.getName());
+        public Rectangle Save;
+
+        @FXML
+        private TableColumn<ViewSupplierInformation, String> VBirthdate;
+
+        @FXML
+        private TableColumn<ViewSupplierInformation, String> VCompany;
+
+        @FXML
+        private TableColumn<ViewSupplierInformation, String> VContact;
+
+        @FXML
+        private TableColumn<ViewSupplierInformation, String> VSupplierId;
+
+        @FXML
+        private TableColumn<ViewSupplierInformation, String> VSupplierName;
+
+        @FXML
+        private TableColumn<ViewSupplierInformation, String> VTimestamp;
+
+        @FXML
+        private TableColumn<ViewSupplierInformation, Integer> VReorderpoint;
+
+        @FXML
+        private TextField BBirthdate;
+
+        @FXML
+        private TextField BContactNumber;
+
+        @FXML
+        private TextField BSupplierId;
+
+        @FXML
+        private TextField BSupplierName;
+
+        @FXML
+        private TableView<ViewSupplierInformation> ViewSupplierTable;
+
+        @FXML
+        private Label userIdLabel;
+
+        @FXML
+        private TextField BReorderpoint;
+
+        int index = -1;
+
+        Connection connect = null;
+        Resultset rs = null;
+        PreparedStatement pstmt = null;
+
+
+        public void setUserData(String idstr) {
+            userIdLabel.setText(idstr);
+        }
+
+        @FXML
+        public void initialize() {
+            VSupplierId.setCellValueFactory(new PropertyValueFactory<ViewSupplierInformation, String>("supplierID"));
+            VCompany.setCellValueFactory(new PropertyValueFactory<ViewSupplierInformation, String>("companyName"));
+            VSupplierName.setCellValueFactory(new PropertyValueFactory<ViewSupplierInformation, String>("supplierName"));
+            VBirthdate.setCellValueFactory(new PropertyValueFactory<ViewSupplierInformation, String>("birthdate"));
+            VContact.setCellValueFactory(new PropertyValueFactory<ViewSupplierInformation, String>("contactnum"));
+            VTimestamp.setCellValueFactory(new PropertyValueFactory<ViewSupplierInformation, String>("timestamp"));
+            VReorderpoint.setCellValueFactory(new PropertyValueFactory<ViewSupplierInformation, Integer>("Reorderpoint"));
+
+            ObservableList<ViewSupplierInformation> data = SupplierSQLConnector.getData();
+            System.out.println("Size of the list: " + data.size());
+            ViewSupplierTable.setItems(data);
+
+            ViewSupplierTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                if (newSelection != null) {
+                    // Populate the text fields with data from the selected item
+
+                    BSupplierId.setText(newSelection.getSupplierID());
+                    BSupplierName.setText(newSelection.getSupplierName());
+                    BContactNumber.setText(newSelection.getContactnum());
+                    BBirthdate.setText(newSelection.getBirthdate());
+                    BReorderpoint.setText(String.valueOf(newSelection.getReorderpoint()));
+                }
+            });
+
+            ViewSupplierTable.refresh();
+
+        }
+
+        @FXML
+        public void Save(ActionEvent event) {
+            ViewSupplierInformation selectedItem = ViewSupplierTable.getSelectionModel().getSelectedItem();
+
+            if (selectedItem != null) {
+
+                String supplierid = BSupplierId.getText();
+                String suppliername = BSupplierName.getText();
+                String contact = BContactNumber.getText();
+                String birthdate = BBirthdate.getText();
+                Integer reorderpoint = Integer.valueOf(BReorderpoint.getText());
+
+                selectedItem.setSupplierID(supplierid);
+                selectedItem.setSupplierName(suppliername);
+                selectedItem.setContactnum(contact);
+                selectedItem.setBirthdate(birthdate);
+                selectedItem.setReorderpoint(reorderpoint);
+
+                SupplierSQLConnector.updateData(selectedItem);
+
+                // Refresh the TableView to reflect the changesl
+                ViewSupplierTable.refresh();
+            } else {
+                // If no item is selected, display an error message
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Error");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Please select an item to update.");
+                errorAlert.showAndWait();
+            }
+        }
+
+        @FXML
+        private void loadDataFromDatabase() {
+            String url = "jdbc:mysql://localhost:3306/booksales";
+            DatabaseInformation Data = new DatabaseInformation();
+
+            String sql = "SELECT `supplier_id`, `company name`, `representative name`, `Birthdate`, `contact number`, `TimeStamp`, Re-order point FROM booksales.add_supplier";
+
+            ObservableList<ViewSupplierInformation> supplierList = FXCollections.observableArrayList();
+
+            try (Connection conn = DriverManager.getConnection(url, Data.user, Data.password);
+                 PreparedStatement pstmt = conn.prepareStatement(sql);
+                 ResultSet rs = pstmt.executeQuery();) {
+                // Clear existing items in the TableView
+                ViewSupplierTable.getItems().clear();
+
+                // Iterate through the ResultSet and populate the TableView
+                while (rs.next()) {
+                    ViewSupplierInformation data = new ViewSupplierInformation(
+                            rs.getString("supplier_id"),
+                            rs.getString("company name"),
+                            rs.getString("supplier name"),
+                            rs.getString("Birthdate"),
+                            rs.getString("contact number"),
+                            rs.getString("TimeStamp"),
+                            rs.getInt("Re-order point")
+                    );
+                    supplierList.add(data);
+                }
+            } catch (SQLException e) {
+                logger.severe("Error loading UpdateSupplier.fxml: " + e.getMessage());
+            }
+        }
+
+        public void backSupplierMain(ActionEvent event) {
+            String idstr = userIdLabel.getText();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("AddSupplier.fxml"));
+                Parent root = loader.load();
+
+                AddSupplier controller = loader.getController();
+
+                controller.setUserData(idstr);
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                logger.severe("Error occurred during opening AddSupplier " + e.getMessage());
+            }
+        }
+
+        public void ViewSupplier(ActionEvent event) {
+            String idstr = userIdLabel.getText();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewSupplier.fxml"));
+                Parent root = loader.load();
+
+                ViewSuppliers controller = loader.getController();
+
+                controller.setUserData(idstr);
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                logger.severe("Error occurred during opening ViewSupplier " + e.getMessage());
+            }
+        }
+
+        public void BackDashboard(ActionEvent event) {
+            String idstr = userIdLabel.getText();
+
+            String url = "jdbc:mysql://127.0.0.1:3306/signup_schema";
+            DatabaseInformation data = new DatabaseInformation();
+
+            try (Connection connection = DriverManager.getConnection(url, data.user, data.password)) {
+                String userid = "SELECT * FROM users WHERE userid = ?";
+
+                PreparedStatement selectionStatement = connection.prepareStatement(userid);
+                selectionStatement.setString(1, idstr);
+                ResultSet result = selectionStatement.executeQuery();
+
+                while (result.next()) {
+                    String storedUserType = result.getString("user_type");
+                    if (storedUserType.equals("Admin")) {
+                        BackDashboardAdmin(event);
+                    } else if (storedUserType.equals("Staff")) {
+                        BackDashboardStaff(event);
+                    }
+                }
+            } catch (SQLException e) {
+                logger.severe("Error occurred during Selection" + e.getMessage());
+            }
+        }
+
+        @FXML
+        public void BackDashboardAdmin(ActionEvent event) {
+            String idstr = userIdLabel.getText();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminHomePage.fxml"));
+                Parent root = loader.load();
+
+                AdminHomePage controller = loader.getController();
+
+                controller.setUserData(idstr);
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                logger.severe("Error occurred during opening ViewSupplier " + e.getMessage());
+            }
+        }
+
+        @FXML
+        public void BackDashboardStaff(ActionEvent event) {
+            String idstr = userIdLabel.getText();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("StaffHomePage.fxml"));
+                Parent root = loader.load();
+
+                // Get the controller instance of adminHomePageController
+                StaffHomePage controller = loader.getController();
+
+                // Pass user data back to adminHomePageController
+                controller.setUserData(idstr);
+
+                // Show the adminHomePage scene
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                logger.severe("Error loading StaffHomePage.fxml: " + e.getMessage());
+            }
+        }
+
+
+        public void Info(ActionEvent event) {
+            String idstr = userIdLabel.getText();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("UserInfo.fxml"));
+                Parent root = loader.load();
+
+                UserInfo controller = loader.getController();
+
+                controller.setUserData(idstr);
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                logger.severe("Error occurred during opening UserInfo " + e.getMessage());
+            }
+        }
+    }
+
