@@ -3,8 +3,6 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,97 +12,128 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.system4.ViewSuppliers">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.system4.AddSupplier">
     <children>
-      <Rectangle fx:id="rectangleDesign" arcHeight="5.0" arcWidth="5.0" fill="#d3e3fc" height="612.0" layoutX="317.0" stroke="#00887a" strokeType="INSIDE" width="708.0" />
-        <TableView fx:id="ViewSupplierTable" layoutX="347.0" layoutY="210.0" onSort="#initialize" prefHeight="300.0" prefWidth="649.0" stylesheets="@../../../Stylesheet/dashboardDesign.css">
-            <columns>
-                <TableColumn fx:id="VSupplierId" prefWidth="88.0" text="SUPPLIER ID" />
-                <TableColumn fx:id="VCompany" prefWidth="112.00003051757812" text="COMPANY NAME" />
-                <TableColumn fx:id="VSupplierName" prefWidth="110.39996337890625" text="SUPPLIER NAME" />
-                <TableColumn fx:id="VBirthdate" prefWidth="86.39996337890625" text="BIRTHDATE" />
-                <TableColumn fx:id="VContact" prefWidth="111.2000732421875" text="CONTACT NUMBER" />
-                <TableColumn fx:id="VTimestamp" prefWidth="76.0" text="TIMESTAMP" />
-            <TableColumn fx:id="VReorderpoint" prefWidth="86.400146484375" text="RE-ORDER POINT" />
-            </columns>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="604.0" layoutX="-4.0" layoutY="-2.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="312.0" />
+      <Rectangle fx:id="rectangleDesign" arcHeight="5.0" arcWidth="5.0" fill="#d3e3fc" height="593.0" layoutX="319.0" layoutY="-1.0" stroke="#00887a" strokeType="INSIDE" width="696.0" AnchorPane.rightAnchor="-1.0" />
+        <TextField id="white" fx:id="Contactnumber" layoutX="576.0" layoutY="384.0" prefHeight="36.0" prefWidth="280.0" stylesheets="@../../../Stylesheet/stylesheet.css">
          <styleClass>
             <String fx:value="white-bg" />
             <String fx:value="shadow" />
          </styleClass>
-        </TableView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="60.0" layoutX="317.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="708.0" AnchorPane.bottomAnchor="554.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="36.0" layoutX="317.0" layoutY="576.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="708.0" AnchorPane.bottomAnchor="0.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="586.0" layoutX="1011.0" layoutY="3.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" AnchorPane.rightAnchor="0.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="614.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="318.0" AnchorPane.bottomAnchor="1.121337890625" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00887a" height="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="318.0" AnchorPane.bottomAnchor="554.121337890625" AnchorPane.topAnchor="0.0" />
-      <Line endX="-123.0" endY="582.878662109375" layoutX="440.0" layoutY="33.0" startX="-125.0" startY="-27.0" strokeWidth="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Line endX="273.878662109375" endY="-5.0" layoutX="41.0" layoutY="65.0" startX="-39.0" startY="-5.0" strokeWidth="3.0" />
-      <Button id="white" fx:id="userInfo" layoutX="106.0" layoutY="76.0" mnemonicParsing="false" onAction="#adminInfo" prefHeight="100.0" prefWidth="106.0" stylesheets="@../../../Stylesheet/stylesheet.css" />
-      <ImageView fitHeight="76.0" fitWidth="80.0" layoutX="118.0" layoutY="88.0">
+      </TextField>
+        <TextField id="white" fx:id="Birthdate" layoutX="576.0" layoutY="332.0" prefHeight="36.0" prefWidth="280.0" stylesheets="@../../../Stylesheet/stylesheet.css">
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass>
+      </TextField>
+        <Label layoutX="432.0" layoutY="388.0" text="Contact Number:">
+         <font>
+            <Font name="Crimson Text Regular" size="19.0" />
+         </font>
+      </Label>
+        <Button id="white" fx:id="Save" layoutX="679.0" layoutY="484.0" mnemonicParsing="false" onAction="#save" prefHeight="36.0" prefWidth="64.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Add">
+         <font>
+            <Font name="Crimson Text Regular" size="15.0" />
+         </font>
+      </Button>
+        <TextField id="white" fx:id="SupplierName" layoutX="576.0" layoutY="282.0" prefHeight="36.0" prefWidth="280.0" stylesheets="@../../../Stylesheet/stylesheet.css" />
+        <TextField id="white" fx:id="CompanyName" layoutX="576.0" layoutY="230.0" prefHeight="36.0" prefWidth="280.0" stylesheets="@../../../Stylesheet/stylesheet.css">
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass>
+      </TextField>
+        <TextField id="white" fx:id="SupplierId" layoutX="571.0" layoutY="176.0" prefHeight="36.0" prefWidth="280.0" stylesheets="@../../../Stylesheet/stylesheet.css" />
+        <Label layoutX="462.0" layoutY="177.0" text="Supplier ID:">
+         <font>
+            <Font name="Crimson Text Regular" size="19.0" />
+         </font>
+      </Label>
+        <Label layoutX="439.0" layoutY="234.0" text="Company Name: ">
+         <font>
+            <Font name="Crimson Text Regular" size="19.0" />
+         </font>
+      </Label>
+        <Label layoutX="447.0" layoutY="287.0" text="Supplier Name:">
+         <font>
+            <Font name="Crimson Text Regular" size="19.0" />
+         </font>
+      </Label>
+        <Label layoutX="470.0" layoutY="336.0" text="Birthdate:">
+         <font>
+            <Font name="Crimson Text Regular" size="19.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="66.0" layoutX="272.0" layoutY="-9.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="724.0" AnchorPane.bottomAnchor="543.0" AnchorPane.topAnchor="-9.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="36.0" layoutX="305.0" layoutY="562.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="696.0" AnchorPane.bottomAnchor="0.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#77a6f7" height="586.0" layoutX="1001.0" layoutY="-7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" AnchorPane.rightAnchor="0.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00887a" height="57.0" layoutX="-1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="305.0" AnchorPane.bottomAnchor="543.0" AnchorPane.topAnchor="0.0" />
+      <Line endX="-123.0" endY="571.0" layoutX="428.0" layoutY="29.0" startX="-125.0" startY="-27.0" strokeWidth="3.0" />
+      <Line endX="270.878662109375" endY="-5.0" layoutX="30.0" layoutY="61.0" startX="-31.0000057220459" startY="-5.0" strokeWidth="3.0" />
+      <Button id="white" fx:id="userInfo" layoutX="100.0" layoutY="65.0" mnemonicParsing="false" onAction="#adminInfo" prefHeight="100.0" prefWidth="106.0" stylesheets="@../../../Stylesheet/stylesheet.css" />
+      <ImageView fitHeight="76.0" fitWidth="80.0" layoutX="113.0" layoutY="77.0">
          <image>
             <Image url="@Images/user_.png" />
          </image>
       </ImageView>
-      <Label fx:id="userIdLabel" alignment="CENTER" layoutX="88.0" layoutY="184.0" prefHeight="36.0" prefWidth="142.0" textAlignment="CENTER">
+      <Label fx:id="userIdLabel" alignment="CENTER" layoutX="82.0" layoutY="173.0" prefHeight="36.0" prefWidth="142.0" textAlignment="CENTER">
          <font>
             <Font name="Crimson Text Bold" size="20.0" />
          </font>
       </Label>
-      <Line endX="100.0" layoutX="163.0" layoutY="218.0" startX="-100.0" />
-      <Button id="white" fx:id="backAdminHome" layoutX="32.0" layoutY="278.0" mnemonicParsing="false" onAction="#BackDashboard" prefHeight="36.0" prefWidth="251.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Dashboard">
+      <Line endX="100.0" layoutX="153.0" layoutY="208.0" startX="-100.0" />
+      <Button id="white" fx:id="backAdminHome" layoutX="24.0" layoutY="264.0" mnemonicParsing="false" onAction="#BackDashboard" prefHeight="36.0" prefWidth="251.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Dashboard" AnchorPane.bottomAnchor="300.0" AnchorPane.topAnchor="264.0">
          <font>
             <Font name="Crimson Text Regular" size="15.0" />
          </font>
       </Button>
-      <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="41.0" layoutY="283.0">
+      <Button id="white" layoutX="24.0" layoutY="333.0" mnemonicParsing="false" onAction="#viewSupplierInfo" prefHeight="36.0" prefWidth="251.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="View Supplier Info" AnchorPane.bottomAnchor="231.0">
+         <font>
+            <Font name="Crimson Text Regular" size="15.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="32.0" layoutY="267.0">
          <image>
             <Image url="@Images/dashboard.png" />
          </image>
       </ImageView>
-      <Button id="gray" layoutX="33.0" layoutY="348.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="251.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="View Supplier Info">
-         <font>
-            <Font name="Crimson Text Regular" size="15.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="41.0" layoutY="353.0">
+      <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="32.0" layoutY="337.0">
          <image>
             <Image url="@Images/ViewSuppliers.png" />
          </image>
       </ImageView>
-      <Button id="white" layoutX="32.0" layoutY="416.0" mnemonicParsing="false" onAction="#updateSuppliers" prefHeight="36.0" prefWidth="251.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Update Suppliers Info" AnchorPane.bottomAnchor="164.66666666666663" AnchorPane.leftAnchor="32.0" AnchorPane.topAnchor="416.0">
+      <Button id="white" layoutX="27.0" layoutY="397.0" mnemonicParsing="false" onAction="#openUpdateSupplier" prefHeight="36.0" prefWidth="251.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Update Suppliers Info" AnchorPane.bottomAnchor="167.66666666666663" AnchorPane.topAnchor="397.0">
          <font>
             <Font name="Crimson Text Regular" size="15.0" />
          </font>
       </Button>
-      <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="41.0" layoutY="420.0">
+      <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="32.0" layoutY="402.0">
          <image>
             <Image url="@Images/update.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="62.0" fitWidth="212.0" layoutX="52.0" layoutY="-1.0">
+      <ImageView fitHeight="62.0" fitWidth="212.0" layoutX="41.0" layoutY="-5.0">
          <image>
             <Image url="@Images/booksale1.png" />
          </image>
       </ImageView>
-      <Button id="white" fx:id="backAdminHome1" layoutX="899.0" layoutY="532.0" mnemonicParsing="false" onAction="#backToAddSupplier" prefHeight="36.0" prefWidth="90.0" stylesheets="@../../../Stylesheet/stylesheet.css" text="Back">
-         <font>
-            <Font name="Crimson Text Regular" size="15.0" />
-         </font>
-      </Button>
-      <Text fx:id="BookSalesText" fill="#00887a" layoutX="370.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VIEW SUPPLIER INFORMATION">
+      <Text fx:id="BookSalesText" fill="#00887a" layoutX="519.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD SUPPLIER">
          <font>
             <Font name="PoetsenOne" size="45.0" />
          </font>
       </Text>
-      <TextField id="white" fx:id="Search" layoutX="395.0" layoutY="159.0" prefHeight="34.0" prefWidth="407.0" promptText="Search" stylesheets="@../../../Stylesheet/stylesheet.css">
-         <font>
-            <Font name="Crimson Text Regular" size="15.0" />
-         </font>
+      <TextField id="white" fx:id="Reorderpoint" layoutX="576.0" layoutY="432.0" prefHeight="36.0" prefWidth="280.0" stylesheets="@../../../Stylesheet/stylesheet.css">
+         <styleClass>
+            <String fx:value="white-bg" />
+            <String fx:value="shadow" />
+         </styleClass>
       </TextField>
-      <ImageView fx:id="searchImages" fitHeight="47.0" fitWidth="39.0" layoutX="350.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Images/images-removebg-preview.png" />
-         </image>
-      </ImageView>
+      <Label layoutX="448.0" layoutY="436.0" text="Re-order Point:">
+         <font>
+            <Font name="Crimson Text Regular" size="19.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
