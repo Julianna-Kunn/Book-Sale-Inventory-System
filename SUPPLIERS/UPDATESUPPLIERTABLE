@@ -1,0 +1,82 @@
+package com.example.system4;
+
+public class UpdateSupplierTable {
+
+    String supplierID;
+    String companyName;
+    String supplierName;
+    String timestamp;
+    String contactnum;
+    String birthdate;
+    int reorderpoint;
+
+    public UpdateSupplierTable(String supplierID, String supplierName, String birthdate, String timestamp, String companyName, String contactnum, int reorderpoint){
+        this.supplierID = supplierID;
+        this.supplierName = supplierName;
+        this.timestamp = timestamp;
+        this.contactnum = contactnum;
+        this.companyName = companyName;
+        this.birthdate = birthdate;
+        this.reorderpoint = reorderpoint;
+    }
+
+    public String getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getContactnum() {
+        return contactnum;
+    }
+
+    public void setContactnum(String contactnum) {
+        this.contactnum = contactnum;
+    }
+
+    public String getSupplierID() {
+        return supplierID;
+    }
+
+    public void setSupplierID(String supplierID) {
+        this.supplierID = supplierID;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public int getReorderpoint() {
+        return reorderpoint;
+    }
+
+
+    public void setReorderpoint(int reorderpoint) {
+        this.reorderpoint = reorderpoint;}
+    }
+
+
+
+
